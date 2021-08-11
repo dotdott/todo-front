@@ -1,0 +1,36 @@
+$main-blue: hsl(206, 100%, 69%);
+$blue-dark: hsla(206, 100%, 69%, 0.699);
+
+$main-red: hsl(0, 100%, 69%);
+$red-dark: hsla(0, 100%, 69%, 0.699);
+
+$background: #f8f9fa;
+$gray: #c4c4c4;
+$gray-lighter: #e3e0e0;
+$gray-light: #dcd8d8;
+$gray-dark: #9e9a9a;
+$gray-darker: #656363;
+
+$state-warning: #f9ba1a;
+$state-danger: #d0233e;
+$state-success: #50af2f;
+$state-info: #5bc0de;
+$state-light: #f7f8f9;
+$state-dark: #2e3338;
+$state-white: #ffffff;
+
+$font-twenty: 1.25rem;
+$font-eighteen: 1.125rem;
+$font-sixteen: 1rem;
+$font-fourteen: 0.875rem;
+$font-twelve: 0.75rem;
+$font-teen: 0.625rem;
+$font-eight: 0.5rem;
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+
+  font-family: "Oswald", sans-serif;
+}
