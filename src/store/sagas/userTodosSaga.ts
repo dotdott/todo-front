@@ -1,19 +1,26 @@
 /* eslint-disable no-constant-condition */
 
-import { call, put } from "redux-saga/effects";
+import { call, CallEffect, put, PutEffect } from "redux-saga/effects";
 import { Types } from "../reducers/userTodosReducer";
 
 import { api } from "../../services/api";
+import { Action } from "redux";
+import { IUserTodos } from "../../global/@types";
 
 interface IResponse {
-  data: any[];
+  data: IUserTodos[];
 }
 
-export function* userTodosSaga(action: any): Generator<any, void, IResponse> {
+export type IReduxSagaActionTypes = CallEffect<IResponse> | PutEffect<Action>;
+
+export function* userTodosSaga(
+  action: Action<IResponse> | IResponse
+): Generator<IReduxSagaActionTypes, void, IResponse> {
   let data;
+
   try {
     let response = yield call(() => {
-      return api.get<IResponse>(`/todo`);
+      return api.get(`/todo`);
     });
 
     data = response.data;

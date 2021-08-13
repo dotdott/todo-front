@@ -1,0 +1,9 @@
+@import "../../global/global.scss";
+
+.testt {
+  background: linear-gradient(45deg, $dark-blue 30%, $state-info 90%);
+  color: #fff;
+  height: 48px;
+  border: 0;
+  border-radius: 8px;
+}
