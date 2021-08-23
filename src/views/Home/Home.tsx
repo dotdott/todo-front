@@ -1,6 +1,7 @@
-import { Button, Container, Tab, Tabs } from "@material-ui/core";
+import { Container, Tab, Tabs } from "@material-ui/core";
 import React from "react";
 import { useDispatch } from "react-redux";
+import Navbar from "../../components/Navbar";
 import { api } from "../../services/api";
 import { setToken } from "../../services/Token";
 import { Types } from "../../store/reducers/userTodosReducer";
@@ -33,19 +34,9 @@ const Home = () => {
   };
 
   return (
-    <Container maxWidth={false}>
-      <Button variant="outlined" className="testt">
-        Default
-      </Button>
-      <Tabs value={0} indicatorColor="primary" textColor="primary" centered>
-        <Tab label="Item One" />
-        <Tab label="Item Two" />
-        <Tab label="Item Three" />
-      </Tabs>
-
-      <button onClick={handleLogin}>Login</button>
-      <button onClick={handleGetUserTodos}>Request Todos</button>
-    </Container>
+    <div className="background">
+      <p>Home</p>
+    </div>
   );
 };
 

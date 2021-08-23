@@ -1,8 +1,9 @@
 $main-blue: hsl(206, 100%, 69%);
-$dark-blue: hsla(206, 100%, 69%, 0.712);
+$dark-blue: hsl(206, 93%, 58%);
+$darker-blue: hsl(206, 66%, 44%);
 
 $main-red: hsl(0, 100%, 69%);
-$dark-red: hsla(0, 100%, 69%, 0.699);
+$dark-red: hsl(0, 93%, 62%);
 
 $background: #f8f9fa;
 $gray: #c4c4c4;
@@ -33,4 +34,17 @@ $font-eight: 0.5rem;
   box-sizing: border-box;
 
   font-family: "Oswald", sans-serif;
+}
+
+.background {
+  background-image: linear-gradient(
+      to top,
+      rgba(172, 203, 238, 0.2) 0%,
+      rgba(231, 240, 253, 0.5) 100%
+    ),
+    url("../assets/data.svg");
+
+  width: 100vw;
+  height: 100vh;
+  padding: 16px;
 }

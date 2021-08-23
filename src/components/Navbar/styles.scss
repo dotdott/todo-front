@@ -1,0 +1,40 @@
+@import "../../global/global.scss";
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 32px 16px 16px;
+
+  background: $dark-blue;
+
+  &__go-home {
+    display: flex;
+    align-items: center;
+
+    &__img {
+      padding-top: 10px;
+      width: 40px;
+      height: 40px;
+      object-fit: contain;
+      margin-left: 16px;
+
+      cursor: pointer;
+    }
+  }
+
+  &__navigation {
+    display: flex;
+    align-items: center;
+    padding-top: 16px;
+    gap: 16px;
+    margin-right: 16px;
+
+    text-decoration: none;
+
+    &__hrefs {
+      color: #fff;
+      text-decoration: none;
+      font-size: $font-twenty;
+    }
+  }
+}

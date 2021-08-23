@@ -1,0 +1,81 @@
+@import "../../global/global.scss";
+
+.auth {
+  &__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  &__wrapper {
+    padding: 24px 32px;
+    border-radius: 8px;
+
+    min-width: 400px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.175);
+    background: #fffeee;
+
+    @media screen and(max-width: 400px) {
+      min-width: auto;
+    }
+
+    &__title {
+      font-size: $font-eighteen;
+      margin-bottom: 16px;
+      color: $gray-darker;
+    }
+
+    &__error {
+      font-family: "Roboto", sans-serif;
+      color: $state-danger;
+      font-weight: 600;
+    }
+
+    &__invitation {
+      font-size: $font-sixteen;
+      color: #000;
+      text-align: center;
+
+      &__link {
+        color: $dark-red;
+        font-weight: 500;
+
+        &:hover {
+          color: $main-red;
+          transition: color 0.3s ease;
+        }
+      }
+    }
+  }
+
+  &__input__fields {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+
+    & label.Mui-focused {
+      color: $main-red;
+    }
+    & .is_filleded legend {
+      padding-right: 5px;
+    }
+
+    & .MuiOutlinedInput-root {
+      & fieldset {
+        border-color: $gray-darker;
+      }
+      &:hover fieldset {
+        border-color: $main-red;
+      }
+
+      &.Mui-focused fieldset {
+        border-color: $main-red;
+
+        & legend {
+          padding-right: 5px;
+        }
+      }
+    }
+  }
+}

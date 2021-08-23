@@ -1,0 +1,25 @@
+@import "../../global/global.scss";
+
+.button {
+  height: 48px;
+  border: 0;
+  border-radius: 8px;
+
+  &._blue {
+    background: linear-gradient(45deg, $dark-blue 30%, $state-info 90%);
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(-45deg, $dark-blue 30%, $state-info 90%);
+    }
+  }
+
+  &._red {
+    background: linear-gradient(45deg, $dark-red 30%, $main-red 90%);
+    color: #fff;
+
+    &:hover {
+      background: linear-gradient(-45deg, $dark-red 30%, $main-red 90%);
+    }
+  }
+}

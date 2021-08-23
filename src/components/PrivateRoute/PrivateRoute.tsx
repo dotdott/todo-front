@@ -2,6 +2,7 @@ import React, { Suspense } from "react";
 import { renderRoutes } from "react-router-config";
 import { useHistory } from "react-router-dom";
 import { getToken } from "../../services/Token";
+import LoadingScreen from "../LoadingScreen";
 
 const PrivateRoute = ({ route }: any) => {
   const history = useHistory();
@@ -11,7 +12,7 @@ const PrivateRoute = ({ route }: any) => {
   }
 
   return (
-    <Suspense fallback={<p>Carregando...</p>}>
+    <Suspense fallback={<LoadingScreen />}>
       {renderRoutes(route.routes)}
     </Suspense>
   );
