@@ -35,6 +35,11 @@
       color: #fff;
       text-decoration: none;
       font-size: $font-twenty;
+
+      &.current {
+        padding: 0 5px;
+        border-bottom: 2px solid $main-red;
+      }
     }
   }
 }

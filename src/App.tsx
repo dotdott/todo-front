@@ -9,11 +9,18 @@ import LoadingScreen from "./components/LoadingScreen";
 import { Container } from "@material-ui/core";
 import Navbar from "./components/Navbar";
 
+const stHome = {
+  padding: 0,
+  overflow: "hidden",
+  height: "100vh",
+  width: "100vw",
+};
+
 function App() {
   const route: any = routes;
 
   return (
-    <Container maxWidth={false} className="home" style={{ padding: 0 }}>
+    <Container maxWidth={false} className="home" style={stHome}>
       <Router>
         <Navbar />
         <Suspense fallback={<LoadingScreen />}>{renderRoutes(route)}</Suspense>

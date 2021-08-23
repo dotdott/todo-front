@@ -1,13 +1,23 @@
-import { Tab, Tabs } from "@material-ui/core";
-import React from "react";
-import "./styles.scss";
-import moeImg from "../../assets/moe.png";
+import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
+import moeImg from "../../assets/moe.png";
+import { IStateUser } from "../../global/@types";
+import { cleanToken } from "../../services/Token";
+import { Types } from "../../store/reducers/userReducer";
+import "./styles.scss";
 
 const Navbar = () => {
   const history = useHistory();
+  const { id } = useSelector((state: IStateUser) => state.stateUser);
+  const dispatch = useDispatch();
 
-  const handleChangeScreen = () => {};
+  const handleLogout = () => {
+    cleanToken();
+
+    return dispatch({
+      type: Types.CLEAN_USER,
+    });
+  };
 
   return (
     <header className="navbar">
@@ -28,13 +38,23 @@ const Navbar = () => {
         >
           Minhas Tarefas
         </NavLink>
-        <NavLink
-          to="/login"
-          className="navbar__navigation__hrefs"
-          activeClassName="current"
-        >
-          Login
-        </NavLink>
+        {id === -1 ? (
+          <NavLink
+            to="/login"
+            className="navbar__navigation__hrefs"
+            activeClassName="current"
+          >
+            Login
+          </NavLink>
+        ) : (
+          <span
+            className="navbar__navigation__hrefs"
+            onClick={handleLogout}
+            style={{ cursor: "pointer" }}
+          >
+            Logout
+          </span>
+        )}
       </nav>
     </header>
   );
