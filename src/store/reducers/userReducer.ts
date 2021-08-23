@@ -4,14 +4,12 @@ import { createActions, createReducer } from "reduxsauce";
 export interface IUser {
   username: string;
   email: string;
-  token: string;
   id: number;
 }
 
 const INITIAL_STATE = {
   username: "",
   email: "",
-  token: "",
 
   id: -1,
 };
@@ -28,7 +26,6 @@ const addUser: Reducer<IUser, any> = (
   ...state,
   username: action.username,
   email: action.email,
-  token: action.token,
   id: action.id,
 });
 

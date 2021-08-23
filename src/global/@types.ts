@@ -1,3 +1,5 @@
+import { IUser } from "../store/reducers/userReducer";
+
 export interface IUserTodos {
   id: number;
   user_id: number;
@@ -6,4 +8,8 @@ export interface IUserTodos {
   has_completed: number;
 
   created_at: string;
+}
+
+export interface IStateUser {
+  stateUser: IUser;
 }
