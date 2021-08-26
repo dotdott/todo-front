@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import * as MU from "@material-ui/core";
 import Button from "../../components/Button";
 import LoadingScreen from "../../components/LoadingScreen";
@@ -13,6 +13,8 @@ import { IErrorHandlerResults, IStateUser } from "../../global/@types";
 import "../Login/styles.scss";
 import { handleErrors } from "../../util/handleErrors";
 import { setToken } from "../../services/Token";
+import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
+import ModalWarning from "../../components/ModalWarning";
 
 interface IRegisterResults {
   user: IUser;
@@ -29,10 +31,24 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEnteringPage, setIsEnteringPage] = useState(false);
+  const [showModalError, setShowModalError] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const dispatch = useDispatch();
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const history = useHistory();
+
+  const screenRef: any = useRef();
+
+  const handleCloseModal = () => {
+    return setShowModalError(false);
+  };
+
+  const monitoringClick = useCheckIfClickedOutside({
+    showModalError,
+    handleClose: handleCloseModal,
+    screenRef,
+  });
 
   const handleCreateAccount = async () => {
     const { email, password, password2, username } = formFields;
@@ -57,7 +73,7 @@ const Register = () => {
         id: user.id,
         email: user.email,
         username: user.username,
-        saveLogin: false,
+        saveLogin: true,
       });
 
       await setToken(data.token);
@@ -67,6 +83,8 @@ const Register = () => {
       const error: IErrorHandlerResults = handleErrors(err);
 
       if (error && error.status) {
+        setModalMessage(error.message);
+        setShowModalError(true);
       } else {
         if (error) {
           setErrorMessage(error.message);
@@ -143,6 +161,14 @@ const Register = () => {
             </p>
           </form>
         </div>
+      )}
+
+      {showModalError && (
+        <ModalWarning
+          show={showModalError}
+          handleClose={handleCloseModal}
+          modalMessage={modalMessage}
+        />
       )}
 
       {isLoading && <LoadingScreen />}

@@ -11,6 +11,10 @@ import { IUser, Types } from "../../store/reducers/userReducer";
 import { useEffect } from "react";
 import { IErrorHandlerResults, IStateUser } from "../../global/@types";
 import { handleErrors } from "../../util/handleErrors";
+import ModalWarning from "../../components/ModalWarning";
+import Icons from "../../components/Icons";
+import { useRef } from "react";
+import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
 
 interface ILoginResults {
   user: IUser[];
@@ -23,10 +27,24 @@ const Login = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isEnteringPage, setIsEnteringPage] = useState(true);
   const [saveLogin, setSaveLogin] = useState(true);
+  const [showModalError, setShowModalError] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   const dispatch = useDispatch();
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const history = useHistory();
+
+  const screenRef: any = useRef();
+
+  const handleCloseModal = () => {
+    return setShowModalError(false);
+  };
+
+  const monitoringClick = useCheckIfClickedOutside({
+    showModalError,
+    handleClose: handleCloseModal,
+    screenRef,
+  });
 
   const handleLogin = async () => {
     const { email, password } = formFields;
@@ -53,6 +71,8 @@ const Login = () => {
       const error: IErrorHandlerResults = handleErrors(err);
 
       if (error && error.status) {
+        setModalMessage(error.message);
+        setShowModalError(true);
       } else {
         if (error) {
           setErrorMessage(error.message);
@@ -74,7 +94,11 @@ const Login = () => {
   }, [id]);
 
   return (
-    <MU.Container maxWidth={false} className="background auth__container">
+    <MU.Container
+      maxWidth={false}
+      className="background auth__container"
+      ref={screenRef}
+    >
       {!isEnteringPage && (
         <div className="auth__wrapper">
           <p className="auth__wrapper__title">Acesse sua conta:</p>
@@ -128,6 +152,14 @@ const Login = () => {
             </p>
           </form>
         </div>
+      )}
+
+      {showModalError && (
+        <ModalWarning
+          show={showModalError}
+          handleClose={handleCloseModal}
+          modalMessage={modalMessage}
+        />
       )}
 
       {isLoading && <LoadingScreen />}
