@@ -1,0 +1,50 @@
+@import "../../global/global.scss";
+
+.todo {
+  &__container {
+    padding: 0 !important;
+    display: flex;
+
+    .tasks {
+      padding: 16px;
+    }
+
+    .completed {
+      &__wrapper {
+        background: #fff;
+        padding: 16px;
+
+        &.open {
+          width: 400px;
+        }
+
+        &.closed {
+          width: 0;
+          padding-right: 0;
+          padding-left: 0;
+        }
+        overflow: hidden;
+        transition: width 0.5s ease;
+
+        &__header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+        }
+
+        &__toggle-bubble {
+          margin-top: 16px;
+          margin-left: 5px;
+          height: 30px;
+
+          background: $main-red;
+
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          border-radius: 50%;
+        }
+      }
+    }
+  }
+}

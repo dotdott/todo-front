@@ -14,9 +14,11 @@ const Navbar = () => {
   const handleLogout = () => {
     cleanToken();
 
-    return dispatch({
+    dispatch({
       type: Types.CLEAN_USER,
     });
+
+    return history.push("/login");
   };
 
   return (

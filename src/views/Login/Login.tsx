@@ -1,20 +1,22 @@
 import React, { useState } from "react";
-import "./styles.scss";
 import * as MU from "@material-ui/core";
-import Button from "../../components/Button";
+
 import { useDispatch, useSelector } from "react-redux";
 import { api } from "../../services/api";
 import { setToken } from "../../services/Token";
-import LoadingScreen from "../../components/LoadingScreen";
+
 import { useHistory } from "react-router-dom";
 import { IUser, Types } from "../../store/reducers/userReducer";
 import { useEffect } from "react";
 import { IErrorHandlerResults, IStateUser } from "../../global/@types";
 import { handleErrors } from "../../util/handleErrors";
-import ModalWarning from "../../components/ModalWarning";
-import Icons from "../../components/Icons";
 import { useRef } from "react";
 import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
+
+import ModalWarning from "../../components/ModalWarning";
+import Button from "../../components/Button";
+import LoadingScreen from "../../components/LoadingScreen";
+import "./styles.scss";
 
 interface ILoginResults {
   user: IUser[];
@@ -101,7 +103,7 @@ const Login = () => {
 
           <form className="auth__input__fields" autoComplete="off">
             <MU.TextField
-              id="outlined-secondary"
+              id="auth-email"
               label="E-mail"
               variant="outlined"
               className={`${formFields.email !== "" ? "its_filleded" : {}}`}
@@ -110,9 +112,10 @@ const Login = () => {
               }
             />
             <MU.TextField
-              id="outlined-secondary"
+              id="auth-pass"
               label="Senha"
               variant="outlined"
+              type="password"
               className={`${formFields.password !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, password: e.target.value })
