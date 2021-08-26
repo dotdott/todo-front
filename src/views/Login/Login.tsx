@@ -34,7 +34,7 @@ const Login = () => {
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const history = useHistory();
 
-  const screenRef: any = useRef();
+  const modalRef: any = useRef();
 
   const handleCloseModal = () => {
     return setShowModalError(false);
@@ -43,7 +43,7 @@ const Login = () => {
   const monitoringClick = useCheckIfClickedOutside({
     showModalError,
     handleClose: handleCloseModal,
-    screenRef,
+    modalRef,
   });
 
   const handleLogin = async () => {
@@ -94,11 +94,7 @@ const Login = () => {
   }, [id]);
 
   return (
-    <MU.Container
-      maxWidth={false}
-      className="background auth__container"
-      ref={screenRef}
-    >
+    <MU.Container maxWidth={false} className="background auth__container">
       {!isEnteringPage && (
         <div className="auth__wrapper">
           <p className="auth__wrapper__title">Acesse sua conta:</p>
@@ -158,7 +154,9 @@ const Login = () => {
         <ModalWarning
           show={showModalError}
           handleClose={handleCloseModal}
+          handleConfirm={handleCloseModal}
           modalMessage={modalMessage}
+          modalRef={modalRef}
         />
       )}
 

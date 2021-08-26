@@ -38,7 +38,7 @@ const Register = () => {
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const history = useHistory();
 
-  const screenRef: any = useRef();
+  const modalRef: any = useRef();
 
   const handleCloseModal = () => {
     return setShowModalError(false);
@@ -47,7 +47,7 @@ const Register = () => {
   const monitoringClick = useCheckIfClickedOutside({
     showModalError,
     handleClose: handleCloseModal,
-    screenRef,
+    modalRef,
   });
 
   const handleCreateAccount = async () => {
@@ -167,7 +167,9 @@ const Register = () => {
         <ModalWarning
           show={showModalError}
           handleClose={handleCloseModal}
+          handleConfirm={handleCloseModal}
           modalMessage={modalMessage}
+          modalRef={modalRef}
         />
       )}
 

@@ -3,21 +3,17 @@ import { useEffect } from "react";
 interface IProps {
   handleClose: () => void;
   showModalError: boolean;
-  screenRef: any;
+  modalRef: any;
 }
 
 export const useCheckIfClickedOutside = ({
   showModalError,
   handleClose,
-  screenRef,
+  modalRef,
 }: IProps) => {
   useEffect(() => {
     const checkIfClickedOutside = (e: any) => {
-      if (
-        showModalError &&
-        screenRef.current &&
-        !screenRef.current.contains(e.target)
-      ) {
+      if (showModalError && modalRef.current === e.target) {
         handleClose();
       }
     };

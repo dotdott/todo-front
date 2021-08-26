@@ -36,4 +36,22 @@
       border-bottom: 1px solid $gray-light;
     }
   }
+
+  &__body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60%;
+
+    border-bottom: 1px solid $gray-light;
+    &__message {
+      font-size: $font-eighteen;
+    }
+  }
+
+  &__footer {
+    margin-top: 10px;
+    display: flex;
+    gap: 10px;
+  }
 }
