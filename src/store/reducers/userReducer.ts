@@ -5,6 +5,7 @@ export interface IUser {
   username: string;
   email: string;
   id: number;
+  saveLogin: boolean;
 }
 
 const INITIAL_STATE = {
@@ -12,6 +13,7 @@ const INITIAL_STATE = {
   email: "",
 
   id: -1,
+  saveLogin: true,
 };
 
 export const { Types, Creators } = createActions({
@@ -27,6 +29,7 @@ const addUser: Reducer<IUser, any> = (
   username: action.username,
   email: action.email,
   id: action.id,
+  saveLogin: action.saveLogin,
 });
 
 const cleanUser = () => INITIAL_STATE;

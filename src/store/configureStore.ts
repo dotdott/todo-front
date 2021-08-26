@@ -9,17 +9,17 @@ import sagas from "./sagas";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 
+const persistConfig = {
+  key: "@todo",
+  storage,
+};
+
 export default function configureStore(preloadedState = {}) {
   const sagaMiddleware = createSagaMiddleware();
   const middlewares = [thunkMiddleware, sagaMiddleware];
   const middlewareEnhancer = composeWithDevTools(
     applyMiddleware(...middlewares)
   );
-
-  const persistConfig = {
-    key: "@todo",
-    storage,
-  };
 
   const persistedReducer = persistReducer(persistConfig, rootReducer);
 

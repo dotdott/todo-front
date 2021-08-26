@@ -9,7 +9,8 @@ import LoadingScreen from "../../components/LoadingScreen";
 import { useHistory } from "react-router-dom";
 import { IUser, Types } from "../../store/reducers/userReducer";
 import { useEffect } from "react";
-import { IStateUser } from "../../global/@types";
+import { IErrorHandlerResults, IStateUser } from "../../global/@types";
+import { handleErrors } from "../../util/handleErrors";
 
 interface ILoginResults {
   user: IUser[];
@@ -21,6 +22,7 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEnteringPage, setIsEnteringPage] = useState(true);
+  const [saveLogin, setSaveLogin] = useState(true);
 
   const dispatch = useDispatch();
   const { id } = useSelector((state: IStateUser) => state.stateUser);
@@ -41,16 +43,28 @@ const Login = () => {
         id: user.id,
         email: user.email,
         username: user.username,
+        saveLogin,
       });
 
       setToken(data.token);
 
       history.push("/tarefas");
     } catch (err) {
-      setErrorMessage(err.response.data);
+      const error: IErrorHandlerResults = handleErrors(err);
+
+      if (error && error.status) {
+      } else {
+        if (error) {
+          setErrorMessage(error.message);
+        }
+      }
     }
 
     setIsLoading(false);
+  };
+
+  const handleSaveLogin = () => {
+    setSaveLogin(!saveLogin);
   };
 
   useEffect(() => {
@@ -62,7 +76,7 @@ const Login = () => {
   return (
     <MU.Container maxWidth={false} className="background auth__container">
       {!isEnteringPage && (
-        <body className="auth__wrapper">
+        <div className="auth__wrapper">
           <p className="auth__wrapper__title">Acesse sua conta:</p>
 
           <form className="auth__input__fields" autoComplete="off">
@@ -87,6 +101,20 @@ const Login = () => {
             {errorMessage !== "" && (
               <p className="auth__wrapper__error">{errorMessage}</p>
             )}
+            <div className="auth__wrapper__sub-sections">
+              <MU.FormControlLabel
+                control={
+                  <MU.Checkbox
+                    checked={saveLogin}
+                    onChange={handleSaveLogin}
+                    name="save login"
+                  />
+                }
+                label="Salvar login"
+              />
+
+              <a href="#">Esqueci minha senha</a>
+            </div>
 
             <Button btnClasses="_red" btnFunction={handleLogin}>
               Entrar
@@ -99,7 +127,7 @@ const Login = () => {
               </a>
             </p>
           </form>
-        </body>
+        </div>
       )}
 
       {isLoading && <LoadingScreen />}

@@ -8,6 +8,11 @@ import "./global/global.scss";
 import LoadingScreen from "./components/LoadingScreen";
 import { Container } from "@material-ui/core";
 import Navbar from "./components/Navbar";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { IStateUser } from "./global/@types";
+import { Types } from "./store/reducers/userReducer";
+import { cleanToken } from "./services/Token";
 
 const stHome = {
   padding: 0,
@@ -18,6 +23,18 @@ const stHome = {
 
 function App() {
   const route: any = routes;
+  const { saveLogin } = useSelector((state: IStateUser) => state.stateUser);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (!saveLogin) {
+      dispatch({
+        type: Types.CLEAN_USER,
+      });
+
+      cleanToken();
+    }
+  }, []);
 
   return (
     <Container maxWidth={false} className="home" style={stHome}>

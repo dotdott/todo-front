@@ -13,3 +13,8 @@ export interface IUserTodos {
 export interface IStateUser {
   stateUser: IUser;
 }
+
+export interface IErrorHandlerResults {
+  status?: number;
+  message: string;
+}

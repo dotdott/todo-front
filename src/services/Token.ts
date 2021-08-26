@@ -10,8 +10,8 @@ export const cleanToken = () => {
   return token;
 };
 
-export const setToken = (key: string) => {
-  const token = localStorage.setItem("@Token_todo", key);
+export const setToken = async (key: string) => {
+  const token = await localStorage.setItem("@Token_todo", key);
 
   return token;
 };

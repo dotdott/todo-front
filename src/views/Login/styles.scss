@@ -32,6 +32,16 @@
       font-weight: 600;
     }
 
+    &__sub-sections {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      & a {
+        color: $darker-blue;
+      }
+    }
+
     &__invitation {
       font-size: $font-sixteen;
       color: #000;
