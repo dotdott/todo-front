@@ -15,6 +15,7 @@ import { handleErrors } from "../../util/handleErrors";
 import { setToken } from "../../services/Token";
 import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
 import ModalWarning from "../../components/ModalWarning";
+import { useKey } from "../../hooks/useKey";
 
 interface IRegisterResults {
   user: IUser;
@@ -33,12 +34,15 @@ const Register = () => {
   const [isEnteringPage, setIsEnteringPage] = useState(false);
   const [showModalError, setShowModalError] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
+  const [inputFocus, setInputFocus] = useState(false);
 
   const dispatch = useDispatch();
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const history = useHistory();
 
   const modalRef: any = useRef();
+
+  const pressed_enter = useKey("Enter");
 
   const handleCloseModal = () => {
     return setShowModalError(false);
@@ -100,6 +104,12 @@ const Register = () => {
     setIsEnteringPage(false);
   }, [id]);
 
+  useEffect(() => {
+    if (inputFocus && pressed_enter) {
+      handleCreateAccount();
+    }
+  }, [pressed_enter]);
+
   return (
     <MU.Container maxWidth={false} className="background auth__container">
       {!isEnteringPage && (
@@ -115,6 +125,8 @@ const Register = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, username: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             <MU.TextField
               id="auth-email"
@@ -124,6 +136,8 @@ const Register = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, email: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             <MU.TextField
               id="auth-password"
@@ -134,6 +148,8 @@ const Register = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, password: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             <MU.TextField
               id="auth-password2"
@@ -144,6 +160,8 @@ const Register = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, password2: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             {errorMessage !== "" && (
               <p className="auth__wrapper__error">{errorMessage}</p>

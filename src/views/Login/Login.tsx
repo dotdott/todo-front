@@ -17,6 +17,7 @@ import ModalWarning from "../../components/ModalWarning";
 import Button from "../../components/Button";
 import LoadingScreen from "../../components/LoadingScreen";
 import "./styles.scss";
+import { useKey } from "../../hooks/useKey";
 
 interface ILoginResults {
   user: IUser[];
@@ -30,6 +31,7 @@ const Login = () => {
   const [isEnteringPage, setIsEnteringPage] = useState(true);
   const [saveLogin, setSaveLogin] = useState(true);
   const [showModalError, setShowModalError] = useState(false);
+  const [inputFocus, setInputFocus] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
 
   const dispatch = useDispatch();
@@ -37,6 +39,8 @@ const Login = () => {
   const history = useHistory();
 
   const modalRef: any = useRef();
+
+  const pressed_enter = useKey("Enter");
 
   const handleCloseModal = () => {
     return setShowModalError(false);
@@ -90,6 +94,12 @@ const Login = () => {
   };
 
   useEffect(() => {
+    if (inputFocus && pressed_enter) {
+      handleLogin();
+    }
+  }, [pressed_enter]);
+
+  useEffect(() => {
     if (id !== -1) return history.goBack();
 
     setIsEnteringPage(false);
@@ -110,6 +120,8 @@ const Login = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, email: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             <MU.TextField
               id="auth-pass"
@@ -120,6 +132,8 @@ const Login = () => {
               onChange={(e) =>
                 setFormFields({ ...formFields, password: e.target.value })
               }
+              onFocus={() => setInputFocus(true)}
+              onBlur={() => setInputFocus(false)}
             />
             {errorMessage !== "" && (
               <p className="auth__wrapper__error">{errorMessage}</p>
