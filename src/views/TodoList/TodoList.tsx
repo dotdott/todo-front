@@ -4,16 +4,10 @@ import "./styles.scss";
 import { useState } from "react";
 import Icons from "../../components/Icons";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  IUserTodosReducer,
-  Types,
-} from "../../store/reducers/userTodosReducer";
-import { IStateUser } from "../../global/@types";
+import { Types } from "../../store/reducers/userTodosReducer";
+import { IStateUser, IStateUserTodos } from "../../global/@types";
 import LoadingScreen from "../../components/LoadingScreen";
-
-interface IStateUserTodos {
-  stateUserTodos: IUserTodosReducer;
-}
+import Drawer from "./components/Drawer";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(false);
@@ -42,26 +36,13 @@ const TodoList = () => {
         <LoadingScreen />
       ) : (
         <>
-          <div
-            className={`completed__wrapper ${openDrawer ? "open" : "closed"}`}
-          >
-            <div className="completed__wrapper__header">
-              <p className="completed__wrapper__header-text">Completados</p>
+          <Drawer
+            openDrawer={openDrawer}
+            handleToggleDrawer={handleToggleDrawer}
+          />
 
-              <div
-                className="completed__wrapper__toggle-bubble"
-                style={{ marginTop: 0 }}
-              >
-                <Icons
-                  name="keyboard_double_arrow_left"
-                  Styles={{ color: "#fff" }}
-                  handleClick={handleToggleDrawer}
-                />
-              </div>
-            </div>
-          </div>
           {!openDrawer && (
-            <div className="completed__wrapper__toggle-bubble">
+            <div className="drawer__wrapper__toggle-bubble">
               <Icons
                 name="keyboard_double_arrow_right"
                 Styles={{ color: "#fff" }}
@@ -70,7 +51,7 @@ const TodoList = () => {
             </div>
           )}
 
-          <div className="tasks">
+          <div className={`tasks ${openDrawer && "is_open"}`}>
             <p>Tarefas</p>
           </div>
         </>

@@ -19,6 +19,7 @@ $state-info: #5bc0de;
 $state-light: #f7f8f9;
 $state-dark: #2e3338;
 $state-white: #ffffff;
+$state-pink: #d53a9d;
 
 $font-twenty: 1.25rem;
 $font-eighteen: 1.125rem;
@@ -47,4 +48,21 @@ $font-eight: 0.5rem;
   width: 100vw;
   height: 100vh;
   padding: 16px;
+}
+
+.custom-scrollbar {
+  overflow-y: scroll;
+  height: 100%;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, $state-pink, $dark-red);
+    border-radius: 30%;
+
+    &:hover {
+      background: linear-gradient(to top, $state-pink, $dark-red);
+    }
+  }
 }

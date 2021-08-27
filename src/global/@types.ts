@@ -1,4 +1,5 @@
 import { IUser } from "../store/reducers/userReducer";
+import { IUserTodosReducer } from "../store/reducers/userTodosReducer";
 
 export interface IUserTodos {
   id: number;
@@ -13,7 +14,9 @@ export interface IUserTodos {
 export interface IStateUser {
   stateUser: IUser;
 }
-
+export interface IStateUserTodos {
+  stateUserTodos: IUserTodosReducer;
+}
 export interface IErrorHandlerResults {
   status?: number;
   message: string;
