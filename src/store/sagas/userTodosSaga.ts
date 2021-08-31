@@ -11,17 +11,20 @@ import { AxiosResponse } from "axios";
 interface IResponse {
   data: IUserTodos[];
 }
+interface IActionParams extends Action {
+  user_id: number;
+}
 
 export type IReduxSagaActionTypes = CallEffect<IResponse> | PutEffect<Action>;
 
 export function* userTodosSaga(
-  action: Action<IResponse> | IResponse
+  action: IActionParams
 ): Generator<IReduxSagaActionTypes, void, AxiosResponse<IResponse>> {
   let data;
 
   try {
     let response = yield call(() => {
-      return api.get(`/todo`);
+      return api.get(`/todo`, { params: { user_id: action.user_id } });
     });
 
     data = response.data;

@@ -8,6 +8,8 @@ export interface IUserTodosReducer {
   perPage: number;
   isLoading: boolean;
 
+  user_id: number;
+
   data: IUserTodos[];
   errorMessage: string;
 }
@@ -17,6 +19,7 @@ const INITIAL_STATE = {
   page: 0,
   perPage: 10,
   isLoading: false,
+  user_id: -1,
 
   data: [],
 
@@ -24,7 +27,7 @@ const INITIAL_STATE = {
 };
 
 export const { Types, Creators } = createActions({
-  userTodosRequest: ["username", "email", "token"],
+  userTodosRequest: ["username", "email", "token", "user_id"],
   userTodosSuccess: ["data"],
   userTodosFailure: ["errorMessage"],
 
@@ -39,6 +42,7 @@ const userTodosRequest: Reducer<IUserTodosReducer, any> = (
   search: action.search,
   page: action.page,
   perPage: action.perPage,
+  user_id: action.user_id,
   isLoading: true,
 });
 
@@ -60,7 +64,17 @@ const userTodosFailure: Reducer<IUserTodosReducer, any> = (
   isLoading: false,
 });
 
-const cleanUserTodos = () => INITIAL_STATE;
+const cleanUserTodos = () => ({
+  search: {},
+  page: 0,
+  perPage: 10,
+  isLoading: false,
+  user_id: -1,
+
+  data: [],
+
+  errorMessage: "",
+});
 
 export default createReducer(INITIAL_STATE, {
   [Types.USER_TODOS_REQUEST]: userTodosRequest,

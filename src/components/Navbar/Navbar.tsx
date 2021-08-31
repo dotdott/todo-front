@@ -4,6 +4,7 @@ import moeImg from "../../assets/moe.png";
 import { IStateUser } from "../../global/@types";
 import { cleanToken } from "../../services/Token";
 import { Types } from "../../store/reducers/userReducer";
+import { Types as TypesTodos } from "../../store/reducers/userTodosReducer";
 import "./styles.scss";
 
 const Navbar = () => {
@@ -11,11 +12,14 @@ const Navbar = () => {
   const { id } = useSelector((state: IStateUser) => state.stateUser);
   const dispatch = useDispatch();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     cleanToken();
 
     dispatch({
       type: Types.CLEAN_USER,
+    });
+    dispatch({
+      type: TypesTodos.CLEAN_USER_TODOS,
     });
 
     return history.push("/login");

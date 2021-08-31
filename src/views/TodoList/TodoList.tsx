@@ -10,9 +10,9 @@ import LoadingScreen from "../../components/LoadingScreen";
 import Drawer from "./components/Drawer";
 
 const TodoList = () => {
-  const [openDrawer, setOpenDrawer] = useState(false);
+  const [openDrawer, setOpenDrawer] = useState(true);
 
-  const { data, isLoading } = useSelector(
+  const { isLoading } = useSelector(
     (state: IStateUserTodos) => state.stateUserTodos
   );
 
@@ -27,8 +27,9 @@ const TodoList = () => {
   useEffect(() => {
     dispatch({
       type: Types.USER_TODOS_REQUEST,
+      user_id: id,
     });
-  }, [id]);
+  }, []);
 
   return (
     <MU.Container maxWidth={false} className="background todo__container">
