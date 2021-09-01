@@ -13,6 +13,7 @@ interface IResponse {
 }
 interface IActionParams extends Action {
   user_id: number;
+  has_completed: number;
 }
 
 export type IReduxSagaActionTypes = CallEffect<IResponse> | PutEffect<Action>;
@@ -22,9 +23,11 @@ export function* userTodosSaga(
 ): Generator<IReduxSagaActionTypes, void, AxiosResponse<IResponse>> {
   let data;
 
+  const { user_id, has_completed } = action;
+
   try {
     let response = yield call(() => {
-      return api.get(`/todo`, { params: { user_id: action.user_id } });
+      return api.get(`/todo`, { params: { user_id, has_completed } });
     });
 
     data = response.data;

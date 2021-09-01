@@ -7,10 +7,117 @@
 
     .tasks {
       padding: 16px;
+      width: 99%;
 
       @media screen and (max-width: 400px) {
         &.is_open {
           display: none;
+        }
+      }
+
+      &__header {
+        display: flex;
+        justify-content: space-between;
+        margin: 0 16px;
+
+        padding-bottom: 10px;
+        border-bottom: 1px solid #6c757d;
+
+        &__tabs {
+          display: flex;
+          align-items: center;
+          gap: 32px;
+
+          &__item {
+            font-size: $font-eighteen;
+            font-weight: 400;
+            cursor: pointer;
+
+            height: 35px;
+            margin-bottom: -17px;
+            padding: 0 15px;
+
+            &.active {
+              border-bottom: 2px solid;
+              border-image-slice: 1;
+              border-image-source: linear-gradient(
+                to right,
+                $state-pink,
+                $dark-red
+              );
+
+              transition: all 0.1s;
+            }
+          }
+        }
+      }
+
+      &__list {
+        padding: 16px;
+
+        &__my-task {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+
+          gap: 16px;
+          padding-top: 10px;
+          margin-top: 10px;
+
+          padding-bottom: 5px;
+          border-bottom: 2px solid;
+          border-image-slice: 1;
+          border-image-source: linear-gradient(
+            to right,
+            $state-pink,
+            $dark-red
+          );
+
+          cursor: pointer;
+
+          &.no-border {
+            border: 0;
+            margin-bottom: 1.25rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            cursor: default;
+          }
+
+          &__description {
+            width: 50%;
+            text-align: center;
+
+            & p {
+              white-space: nowrap;
+              overflow: hidden;
+              text-overflow: ellipsis;
+            }
+          }
+
+          &__set-concluded {
+            & label {
+              margin: 0;
+            }
+          }
+
+          &__status {
+            display: flex;
+            justify-content: flex-end;
+            min-width: 140px;
+
+            &.head {
+              justify-content: center !important;
+            }
+
+            & span {
+              position: relative;
+              top: -20px;
+
+              font-size: 20px;
+
+              color: $dark-red;
+            }
+          }
         }
       }
     }
