@@ -33,14 +33,19 @@ export function* userTodosSaga(
     data = response.data;
     yield put({ type: Types.USER_TODOS_SUCCESS, data });
   } catch (error) {
-    if (error.response.status === 404) {
-      data = { message: "Falha na tentativa de listar as tarefas" };
+    let message;
+
+    if (error.response?.status === 404) {
+      message = "Falha na tentativa de listar as tarefas";
+    } else if (error.response?.data) {
+      message = error.response.data;
     } else {
-      data = error.response.data;
+      message = "Houve um problema com a conexão do servidor =/";
     }
+
     yield put({
       type: Types.USER_TODOS_FAILURE,
-      data,
+      errorMessage: message,
     });
   }
 }

@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import * as MU from "@material-ui/core";
 import "./styles.scss";
 import { useState } from "react";
@@ -9,13 +9,17 @@ import { IStateUser, IStateUserTodos } from "../../global/@types";
 import LoadingScreen from "../../components/LoadingScreen";
 import Drawer from "./components/Drawer";
 import { handleFormatFirstPhraseLetterToUpperCase } from "../../util/handleFormatFirstPhraseLetterToUpperCase";
+import ModalWarning from "../../components/ModalWarning";
+import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
   const [activeMenu, setActiveMenu] = useState("all");
   const [isConcluded, setIsConcluded] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+  const [showModalError, setShowModalError] = useState(false);
 
-  const { isLoading, data } = useSelector(
+  const { isLoading, data, errorMessage } = useSelector(
     (state: IStateUserTodos) => state.stateUserTodos
   );
 
@@ -27,10 +31,17 @@ const TodoList = () => {
     return setOpenDrawer(!openDrawer);
   };
 
-  const handleSetFilterMenu = () => {
-    if (activeMenu === "all") {
-    }
+  const handleCloseModal = () => {
+    return setShowModalError(false);
   };
+
+  const modalRef: any = useRef();
+
+  const monitoringClick = useCheckIfClickedOutside({
+    showModalError,
+    handleClose: handleCloseModal,
+    modalRef,
+  });
 
   useEffect(() => {
     const filterValue =
@@ -42,6 +53,13 @@ const TodoList = () => {
       has_completed: filterValue,
     });
   }, [id, activeMenu]);
+
+  useEffect(() => {
+    if (errorMessage !== "") {
+      setModalMessage(errorMessage);
+      setShowModalError(true);
+    }
+  }, [errorMessage]);
 
   return (
     <MU.Container maxWidth={false} className="background todo__container">
@@ -150,6 +168,16 @@ const TodoList = () => {
             </div>
           </div>
         </>
+      )}
+
+      {showModalError && (
+        <ModalWarning
+          show={showModalError}
+          handleClose={handleCloseModal}
+          handleConfirm={handleCloseModal}
+          modalMessage={modalMessage}
+          modalRef={modalRef}
+        />
       )}
     </MU.Container>
   );
