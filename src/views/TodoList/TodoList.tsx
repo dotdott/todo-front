@@ -11,6 +11,7 @@ import Drawer from "./components/Drawer";
 import { handleFormatFirstPhraseLetterToUpperCase } from "../../util/handleFormatFirstPhraseLetterToUpperCase";
 import ModalWarning from "../../components/ModalWarning";
 import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
+import CreateTodoModal from "./components/CreateTodoModal";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -18,6 +19,7 @@ const TodoList = () => {
   const [isConcluded, setIsConcluded] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
   const [showModalError, setShowModalError] = useState(false);
+  const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
 
   const { isLoading, data, errorMessage } = useSelector(
     (state: IStateUserTodos) => state.stateUserTodos
@@ -31,7 +33,13 @@ const TodoList = () => {
     return setOpenDrawer(!openDrawer);
   };
 
-  const handleCloseModal = () => {
+  const handleCloseModalError = () => {
+    if (errorMessage !== "") {
+      dispatch({
+        type: Types.CLEAN_MESSAGE_ERROR,
+      });
+    }
+
     return setShowModalError(false);
   };
 
@@ -39,7 +47,7 @@ const TodoList = () => {
 
   const monitoringClick = useCheckIfClickedOutside({
     showModalError,
-    handleClose: handleCloseModal,
+    handleClose: handleCloseModalError,
     modalRef,
   });
 
@@ -117,7 +125,11 @@ const TodoList = () => {
                 className="drawer__wrapper__toggle-bubble"
                 style={{ marginTop: 0 }}
               >
-                <Icons name="add" Styles={{ color: "#fff" }} />
+                <Icons
+                  name="add"
+                  Styles={{ color: "#fff" }}
+                  handleClick={() => setShowCreateTodoModal(true)}
+                />
               </div>
             </div>
 
@@ -173,9 +185,17 @@ const TodoList = () => {
       {showModalError && (
         <ModalWarning
           show={showModalError}
-          handleClose={handleCloseModal}
-          handleConfirm={handleCloseModal}
+          handleClose={handleCloseModalError}
+          handleConfirm={handleCloseModalError}
           modalMessage={modalMessage}
+          modalRef={modalRef}
+        />
+      )}
+      {showCreateTodoModal && (
+        <CreateTodoModal
+          show={showCreateTodoModal}
+          handleClose={() => setShowCreateTodoModal(false)}
+          handleConfirm={() => setShowCreateTodoModal(false)}
           modalRef={modalRef}
         />
       )}

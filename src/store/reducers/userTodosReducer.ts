@@ -32,6 +32,7 @@ export const { Types, Creators } = createActions({
   userTodosFailure: ["errorMessage"],
 
   cleanUserTodos: [],
+  cleanMessageError: ["errorMessage"],
 });
 
 const userTodosRequest: Reducer<IUserTodosReducer, any> = (
@@ -76,10 +77,19 @@ const cleanUserTodos = () => ({
   errorMessage: "",
 });
 
+const cleanMessageError: Reducer<IUserTodosReducer, any> = (
+  state = INITIAL_STATE,
+  action: IUserTodosReducer
+) => ({
+  ...state,
+  errorMessage: "",
+});
+
 export default createReducer(INITIAL_STATE, {
   [Types.USER_TODOS_REQUEST]: userTodosRequest,
   [Types.USER_TODOS_SUCCESS]: userTodosSuccess,
   [Types.USER_TODOS_FAILURE]: userTodosFailure,
 
   [Types.CLEAN_USER_TODOS]: cleanUserTodos,
+  [Types.CLEAN_MESSAGE_ERROR]: cleanMessageError,
 });
