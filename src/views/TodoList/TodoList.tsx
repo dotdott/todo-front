@@ -5,18 +5,24 @@ import { useState } from "react";
 import Icons from "../../components/Icons";
 import { useDispatch, useSelector } from "react-redux";
 import { Types } from "../../store/reducers/userTodosReducer";
-import { IStateUser, IStateUserTodos } from "../../global/@types";
+import {
+  IErrorHandlerResults,
+  IStateUser,
+  IStateUserTodos,
+} from "../../global/@types";
 import LoadingScreen from "../../components/LoadingScreen";
 import Drawer from "./components/Drawer";
 import { handleFormatFirstPhraseLetterToUpperCase } from "../../util/handleFormatFirstPhraseLetterToUpperCase";
 import ModalWarning from "../../components/ModalWarning";
 import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
 import CreateTodoModal from "./components/CreateTodoModal";
+import { api } from "../../services/api";
+import { handleErrors } from "../../util/handleErrors";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
   const [activeMenu, setActiveMenu] = useState("all");
-  const [isConcluded, setIsConcluded] = useState(false);
+  const [isConcluded, setIsConcluded] = useState(0);
   const [modalMessage, setModalMessage] = useState("");
   const [showModalError, setShowModalError] = useState(false);
   const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
@@ -28,6 +34,37 @@ const TodoList = () => {
   const { id } = useSelector((state: IStateUser) => state.stateUser);
 
   const dispatch = useDispatch();
+
+  const handleToggleSwitch = async (isChecked: number, todoId: number) => {
+    const checked = isChecked === 1 ? 0 : 1;
+
+    try {
+      const response = await api.put(`/todo/${todoId}`, {
+        has_completed: checked,
+      });
+
+      let updatedTodo = data.filter((todo) => todo.id === todoId);
+      updatedTodo.map((todo) => (todo.has_completed = checked));
+
+      dispatch({
+        type: Types.UPDATE_TODO_LIST,
+        data: [...data, updatedTodo],
+      });
+    } catch (err) {
+      const error: IErrorHandlerResults = handleErrors(err);
+
+      if (error && error.status) {
+        setModalMessage(error.message);
+        setShowModalError(true);
+      } else {
+        if (error) {
+          setShowModalError(true);
+          setModalMessage(error.message);
+        }
+      }
+      console.log(error);
+    }
+  };
 
   const handleToggleDrawer = () => {
     return setOpenDrawer(!openDrawer);
@@ -173,7 +210,9 @@ const TodoList = () => {
                         control={
                           <MU.Switch
                             defaultChecked={task.has_completed === 1}
-                            onChange={() => setIsConcluded(!isConcluded)}
+                            onChange={() =>
+                              handleToggleSwitch(task.has_completed, task.id)
+                            }
                           />
                         }
                         label=""
