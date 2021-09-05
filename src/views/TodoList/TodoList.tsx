@@ -51,6 +51,12 @@ const TodoList = () => {
     modalRef,
   });
 
+  const monitoringTodoModalClick = useCheckIfClickedOutside({
+    showModalError: showCreateTodoModal,
+    handleClose: () => setShowCreateTodoModal(false),
+    modalRef,
+  });
+
   useEffect(() => {
     const filterValue =
       activeMenu === "concluded" ? 1 : activeMenu === "inProgress" ? 0 : "";
