@@ -70,7 +70,7 @@ const TodoList = () => {
   }, [errorMessage]);
 
   return (
-    <MU.Container maxWidth={false} className="background todo__container">
+    <MU.Container maxWidth={false} className="background todo__container ">
       {isLoading ? (
         <LoadingScreen />
       ) : (
@@ -92,7 +92,11 @@ const TodoList = () => {
             </div>
           )}
 
-          <div className={`tasks glass-background ${openDrawer && "is_open"}`}>
+          <div
+            className={`tasks glass-background ${
+              openDrawer && "is_open"
+            } custom-scrollbar larger-scroll`}
+          >
             <div className="tasks__header">
               <div className="tasks__header__tabs">
                 <p
@@ -133,7 +137,7 @@ const TodoList = () => {
               </div>
             </div>
 
-            <div className="tasks__list">
+            <div className="tasks__list ">
               <div className="tasks__list__my-task no-border">
                 <div className="tasks__list__my-task__title head">Título</div>
                 <div className="tasks__list__my-task__description head">
@@ -195,7 +199,6 @@ const TodoList = () => {
         <CreateTodoModal
           show={showCreateTodoModal}
           handleClose={() => setShowCreateTodoModal(false)}
-          handleConfirm={() => setShowCreateTodoModal(false)}
           modalRef={modalRef}
         />
       )}

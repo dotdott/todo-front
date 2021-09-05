@@ -33,6 +33,7 @@ export const { Types, Creators } = createActions({
 
   cleanUserTodos: [],
   cleanMessageError: ["errorMessage"],
+  updateTodoList: ["data"],
 });
 
 const userTodosRequest: Reducer<IUserTodosReducer, any> = (
@@ -85,6 +86,14 @@ const cleanMessageError: Reducer<IUserTodosReducer, any> = (
   errorMessage: "",
 });
 
+const updateTodoList: Reducer<IUserTodosReducer, any> = (
+  state = INITIAL_STATE,
+  action: IUserTodosReducer
+) => ({
+  ...state,
+  data: action.data,
+});
+
 export default createReducer(INITIAL_STATE, {
   [Types.USER_TODOS_REQUEST]: userTodosRequest,
   [Types.USER_TODOS_SUCCESS]: userTodosSuccess,
@@ -92,4 +101,6 @@ export default createReducer(INITIAL_STATE, {
 
   [Types.CLEAN_USER_TODOS]: cleanUserTodos,
   [Types.CLEAN_MESSAGE_ERROR]: cleanMessageError,
+
+  [Types.UPDATE_TODO_LIST]: updateTodoList,
 });

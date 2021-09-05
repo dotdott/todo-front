@@ -52,6 +52,10 @@
     padding: 0 16px;
     padding-bottom: 8px;
 
+    &__error-field {
+      color: $dark-red;
+    }
+
     & > div {
       width: 100%;
 
