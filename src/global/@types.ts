@@ -8,7 +8,7 @@ export interface IUserTodos {
   description: string;
   has_completed: number;
 
-  created_at: string;
+  finished_at: string;
 }
 
 export interface IStateUser {

@@ -91,7 +91,6 @@ const Register = () => {
         setShowModalError(true);
       } else {
         if (error) {
-          setShowModalError(true);
           setErrorMessage(error.message);
         }
       }

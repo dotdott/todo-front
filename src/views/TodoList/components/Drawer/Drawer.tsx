@@ -57,7 +57,7 @@ const Drawer = ({ handleToggleDrawer, openDrawer }: IDrawerProps) => {
                       </div>
 
                       <div className="todo__tasks__finished-time">
-                        <p>2021-08-10 11h05m</p>
+                        <p>{task.finished_at.replace(":", "h")}m</p>
                       </div>
                     </div>
                   )

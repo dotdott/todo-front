@@ -74,14 +74,21 @@
             $dark-red
           );
 
-          cursor: pointer;
-
           &.no-border {
             border: 0;
             margin-bottom: 1.25rem;
             font-size: 1.25rem;
             font-weight: 500;
             cursor: default;
+          }
+
+          &__title {
+            min-width: 15%;
+            max-width: 15%;
+
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
           }
 
           &__description {

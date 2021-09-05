@@ -9,6 +9,7 @@ import {
   IErrorHandlerResults,
   IStateUser,
   IStateUserTodos,
+  IUserTodos,
 } from "../../global/@types";
 import LoadingScreen from "../../components/LoadingScreen";
 import Drawer from "./components/Drawer";
@@ -18,6 +19,7 @@ import { useCheckIfClickedOutside } from "../../hooks/useCheckIfClickedOutside";
 import CreateTodoModal from "./components/CreateTodoModal";
 import { api } from "../../services/api";
 import { handleErrors } from "../../util/handleErrors";
+import moment from "moment";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -26,6 +28,9 @@ const TodoList = () => {
   const [modalMessage, setModalMessage] = useState("");
   const [showModalError, setShowModalError] = useState(false);
   const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
+  const [selectedTodo, setSelectedTodo] = useState<IUserTodos>(
+    {} as IUserTodos
+  );
 
   const { isLoading, data, errorMessage } = useSelector(
     (state: IStateUserTodos) => state.stateUserTodos
@@ -37,18 +42,26 @@ const TodoList = () => {
 
   const handleToggleSwitch = async (isChecked: number, todoId: number) => {
     const checked = isChecked === 1 ? 0 : 1;
+    const timeNow = moment(new Date()).format("DD/MM/YYYY HH:mm");
 
     try {
       const response = await api.put(`/todo/${todoId}`, {
-        has_completed: checked,
+        has_completed: checked.toString(),
+        finished_at: timeNow,
       });
 
-      let updatedTodo = data.filter((todo) => todo.id === todoId);
-      updatedTodo.map((todo) => (todo.has_completed = checked));
+      const updatedTodo = data.map((todo) => {
+        if (todo.id === todoId) {
+          todo.has_completed = checked;
+          todo.finished_at = timeNow;
+        }
+
+        return todo;
+      });
 
       dispatch({
         type: Types.UPDATE_TODO_LIST,
-        data: [...data, updatedTodo],
+        data: updatedTodo,
       });
     } catch (err) {
       const error: IErrorHandlerResults = handleErrors(err);
@@ -77,7 +90,24 @@ const TodoList = () => {
       });
     }
 
+    if (selectedTodo.id) {
+      setSelectedTodo({} as IUserTodos);
+    }
+
     return setShowModalError(false);
+  };
+
+  const handleCloseTodosModal = () => {
+    if (selectedTodo) {
+      setSelectedTodo({} as IUserTodos);
+    }
+
+    return setShowCreateTodoModal(false);
+  };
+
+  const handleEdit = (todo: IUserTodos) => {
+    setSelectedTodo(todo);
+    setShowCreateTodoModal(true);
   };
 
   const modalRef: any = useRef();
@@ -90,7 +120,7 @@ const TodoList = () => {
 
   const monitoringTodoModalClick = useCheckIfClickedOutside({
     showModalError: showCreateTodoModal,
-    handleClose: () => setShowCreateTodoModal(false),
+    handleClose: handleCloseTodosModal,
     modalRef,
   });
 
@@ -210,6 +240,7 @@ const TodoList = () => {
                         control={
                           <MU.Switch
                             defaultChecked={task.has_completed === 1}
+                            checked={task.has_completed === 1}
                             onChange={() =>
                               handleToggleSwitch(task.has_completed, task.id)
                             }
@@ -220,9 +251,12 @@ const TodoList = () => {
                     </div>
                     <div className="tasks__list__my-task__status">
                       {task.has_completed === 1
-                        ? task.created_at
+                        ? task.finished_at.replace(":", "h") + "m"
                         : "Em andamento"}
-                      <Icons name="open_in_new" />
+                      <Icons
+                        name="open_in_new"
+                        handleClick={() => handleEdit(task)}
+                      />
                     </div>
                   </div>
                 ))}
@@ -240,11 +274,13 @@ const TodoList = () => {
           modalRef={modalRef}
         />
       )}
+
       {showCreateTodoModal && (
         <CreateTodoModal
           show={showCreateTodoModal}
-          handleClose={() => setShowCreateTodoModal(false)}
+          handleClose={handleCloseTodosModal}
           modalRef={modalRef}
+          selectedTodo={selectedTodo}
         />
       )}
     </MU.Container>
