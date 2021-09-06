@@ -85,10 +85,25 @@
           &__title {
             min-width: 15%;
             max-width: 15%;
+            display: flex;
 
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            & p {
+              margin-top: 5px;
+              margin-left: -38px;
+            }
+
+            & span {
+              position: relative;
+              top: -20px;
+
+              font-size: 20px;
+
+              color: $dark-red;
+
+              &:nth-child(2) {
+                color: rgb(255, 0, 0);
+              }
+            }
           }
 
           &__description {
@@ -115,15 +130,6 @@
 
             &.head {
               justify-content: center !important;
-            }
-
-            & span {
-              position: relative;
-              top: -20px;
-
-              font-size: 20px;
-
-              color: $dark-red;
             }
           }
         }

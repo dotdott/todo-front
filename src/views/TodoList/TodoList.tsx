@@ -24,13 +24,13 @@ import moment from "moment";
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
   const [activeMenu, setActiveMenu] = useState("all");
-  const [isConcluded, setIsConcluded] = useState(0);
   const [modalMessage, setModalMessage] = useState("");
   const [showModalError, setShowModalError] = useState(false);
   const [showCreateTodoModal, setShowCreateTodoModal] = useState(false);
   const [selectedTodo, setSelectedTodo] = useState<IUserTodos>(
     {} as IUserTodos
   );
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const { isLoading, data, errorMessage } = useSelector(
     (state: IStateUserTodos) => state.stateUserTodos
@@ -75,7 +75,6 @@ const TodoList = () => {
           setModalMessage(error.message);
         }
       }
-      console.log(error);
     }
   };
 
@@ -105,9 +104,59 @@ const TodoList = () => {
     return setShowCreateTodoModal(false);
   };
 
+  const handleModalWarningConfirm = async () => {
+    if (isDeleting) {
+      try {
+        const result = await api.post("/todo/delete", {
+          todo_id: selectedTodo.id,
+        });
+
+        const updatedTodo = data.filter((todo) => todo.id !== selectedTodo.id);
+
+        dispatch({
+          type: Types.UPDATE_TODO_LIST,
+          data: updatedTodo,
+        });
+
+        setIsDeleting(false);
+        setSelectedTodo({} as IUserTodos);
+        return handleCloseModalError();
+      } catch (err) {
+        const error: IErrorHandlerResults = handleErrors(err);
+
+        if (error && error.status) {
+          setModalMessage(error.message);
+          setShowModalError(true);
+        } else {
+          if (error) {
+            setShowModalError(true);
+            setModalMessage(error.message);
+          }
+        }
+      }
+
+      setIsDeleting(false);
+      setSelectedTodo({} as IUserTodos);
+    }
+
+    return handleCloseModalError();
+  };
+
   const handleEdit = (todo: IUserTodos) => {
     setSelectedTodo(todo);
     setShowCreateTodoModal(true);
+  };
+
+  const handleDelete = (todo: IUserTodos) => {
+    setSelectedTodo(todo);
+
+    setIsDeleting(true);
+
+    setModalMessage(
+      "Você deseja realmente excluir esta tarefa permanentemente?"
+    );
+
+    setShowModalError(true);
   };
 
   const modalRef: any = useRef();
@@ -226,13 +275,25 @@ const TodoList = () => {
                 data.map((task) => (
                   <div className="tasks__list__my-task">
                     <div className="tasks__list__my-task__title">
-                      {handleFormatFirstPhraseLetterToUpperCase(task.task)}
+                      <Icons
+                        name="open_in_new"
+                        handleClick={() => handleEdit(task)}
+                      />
+                      <Icons
+                        name="delete_outline"
+                        handleClick={() => handleDelete(task)}
+                      />
+                      <p>
+                        {handleFormatFirstPhraseLetterToUpperCase(task.task)}
+                      </p>
                     </div>
                     <div className="tasks__list__my-task__description">
                       <p>
                         {handleFormatFirstPhraseLetterToUpperCase(
                           task.description
                         )}
+                        PASDKOKODSKOPADSPKODSAOPKASDPKOSDAPKO
+                        ASDOPKDSAOKADSOPPKDSAOASD ASKOPDSAOK
                       </p>
                     </div>
                     <div className="tasks__list__my-task__set-concluded">
@@ -251,12 +312,8 @@ const TodoList = () => {
                     </div>
                     <div className="tasks__list__my-task__status">
                       {task.has_completed === 1
-                        ? task.finished_at.replace(":", "h") + "m"
+                        ? task.finished_at?.replace(":", "h") + "m"
                         : "Em andamento"}
-                      <Icons
-                        name="open_in_new"
-                        handleClick={() => handleEdit(task)}
-                      />
                     </div>
                   </div>
                 ))}
@@ -269,7 +326,7 @@ const TodoList = () => {
         <ModalWarning
           show={showModalError}
           handleClose={handleCloseModalError}
-          handleConfirm={handleCloseModalError}
+          handleConfirm={handleModalWarningConfirm}
           modalMessage={modalMessage}
           modalRef={modalRef}
         />

@@ -7,8 +7,14 @@ import ModalWarning from "../../../../components/ModalWarning";
 import { api } from "../../../../services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { Types } from "../../../../store/reducers/userTodosReducer";
-import { IStateUserTodos, IUserTodos } from "../../../../global/@types";
+import {
+  IErrorHandlerResults,
+  IStateUserTodos,
+  IUserTodos,
+} from "../../../../global/@types";
 import moment from "moment";
+import { handleErrors } from "../../../../util/handleErrors";
+import LoadingScreen from "../../../../components/LoadingScreen";
 
 interface ICreateTodoModalProps {
   show: boolean;
@@ -30,6 +36,8 @@ const CreateTodoModal = ({
   });
   const [showErrors, setShowErrors] = useState({ message: "", show: false });
   const [hasError, setHasError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const timeNow = moment(new Date()).format("DD/MM/YYYY HH:mm");
 
   const dispatch = useDispatch();
@@ -47,6 +55,7 @@ const CreateTodoModal = ({
 
   const handleUpdate = async () => {
     const { title, description, has_completed } = taskFields;
+    setIsLoading(true);
 
     const formData = new FormData();
 
@@ -81,15 +90,27 @@ const CreateTodoModal = ({
           data: updatedTodo,
         });
 
+        setIsLoading(false);
         return handleClose();
       } catch (err) {
-        console.log(err);
+        const error: IErrorHandlerResults = handleErrors(err);
+
+        if (error && error.status) {
+          setShowErrors({ show: true, message: error.message });
+        } else {
+          if (error) {
+            setShowErrors({ show: true, message: error.message });
+          }
+        }
       }
+
+      setIsLoading(false);
     }
   };
 
   const handleSetTodos = async () => {
     const { title, description, has_completed } = taskFields;
+    setIsLoading(true);
 
     if (selectedTodo?.id) {
       return handleUpdate();
@@ -109,13 +130,24 @@ const CreateTodoModal = ({
           data: [...data, result.data],
         });
 
+        setIsLoading(false);
         return handleClose();
       } catch (err) {
-        console.log(err);
+        const error: IErrorHandlerResults = handleErrors(err);
+
+        if (error && error.status) {
+          setShowErrors({ show: true, message: error.message });
+        } else {
+          if (error) {
+            setShowErrors({ show: true, message: error.message });
+          }
+        }
       }
     } else {
       setHasError(true);
     }
+
+    setIsLoading(false);
   };
 
   const handleCloseModalError = () => {
@@ -195,6 +227,9 @@ const CreateTodoModal = ({
             </Button>
           </div>
         </div>
+
+        {isLoading && <LoadingScreen />}
+
         {showErrors && (
           <ModalWarning
             show={showErrors.show}
