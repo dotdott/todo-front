@@ -29,7 +29,6 @@ const Login = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEnteringPage, setIsEnteringPage] = useState(true);
-  const [saveLogin, setSaveLogin] = useState(true);
   const [showModalError, setShowModalError] = useState(false);
   const [inputFocus, setInputFocus] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -67,12 +66,11 @@ const Login = () => {
         id: user.id,
         email: user.email,
         username: user.username,
-        saveLogin,
       });
 
-      setToken(data.token);
+      await setToken(data.token);
 
-      history.push("/tarefas");
+      return history.push("/tarefas");
     } catch (err) {
       const error: IErrorHandlerResults = handleErrors(err);
 
@@ -87,10 +85,6 @@ const Login = () => {
     }
 
     setIsLoading(false);
-  };
-
-  const handleSaveLogin = () => {
-    setSaveLogin(!saveLogin);
   };
 
   useEffect(() => {
@@ -138,20 +132,6 @@ const Login = () => {
             {errorMessage !== "" && (
               <p className="auth__wrapper__error">{errorMessage}</p>
             )}
-            <div className="auth__wrapper__sub-sections">
-              <MU.FormControlLabel
-                control={
-                  <MU.Checkbox
-                    checked={saveLogin}
-                    onChange={handleSaveLogin}
-                    name="save login"
-                  />
-                }
-                label="Salvar login"
-              />
-
-              <a href="#">Esqueci minha senha</a>
-            </div>
 
             <Button btnClasses="_red" btnFunction={handleLogin}>
               Entrar
@@ -163,6 +143,9 @@ const Login = () => {
                 Registre-se
               </a>
             </p>
+            <div className="auth__wrapper__sub-sections">
+              <a href="#">Esqueci minha senha</a>
+            </div>
           </form>
         </div>
       )}

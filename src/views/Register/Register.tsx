@@ -77,7 +77,6 @@ const Register = () => {
         id: user.id,
         email: user.email,
         username: user.username,
-        saveLogin: true,
       });
 
       await setToken(data.token);

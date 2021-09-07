@@ -20,6 +20,8 @@ import CreateTodoModal from "./components/CreateTodoModal";
 import { api } from "../../services/api";
 import { handleErrors } from "../../util/handleErrors";
 import moment from "moment";
+import { useHistory } from "react-router";
+import { getToken } from "../../services/Token";
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -182,7 +184,7 @@ const TodoList = () => {
       user_id: id,
       has_completed: filterValue,
     });
-  }, [id, activeMenu]);
+  }, [activeMenu]);
 
   useEffect(() => {
     if (errorMessage !== "") {
@@ -273,7 +275,7 @@ const TodoList = () => {
 
               {data.length > 0 &&
                 data.map((task) => (
-                  <div className="tasks__list__my-task">
+                  <div className="tasks__list__my-task" key={task.id}>
                     <div className="tasks__list__my-task__title">
                       <Icons
                         name="open_in_new"
@@ -292,8 +294,6 @@ const TodoList = () => {
                         {handleFormatFirstPhraseLetterToUpperCase(
                           task.description
                         )}
-                        PASDKOKODSKOPADSPKODSAOPKASDPKOSDAPKO
-                        ASDOPKDSAOKADSOPPKDSAOASD ASKOPDSAOK
                       </p>
                     </div>
                     <div className="tasks__list__my-task__set-concluded">
@@ -334,8 +334,8 @@ const TodoList = () => {
 
       {showCreateTodoModal && (
         <CreateTodoModal
-          show={showCreateTodoModal}
           handleClose={handleCloseTodosModal}
+          show={showCreateTodoModal}
           modalRef={modalRef}
           selectedTodo={selectedTodo}
         />

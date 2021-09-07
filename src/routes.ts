@@ -3,11 +3,6 @@ import PrivateRoute from "./components/PrivateRoute";
 
 const routes = [
   {
-    path: "/",
-    exact: true,
-    component: lazy(() => import("./views/Home")),
-  },
-  {
     path: "/login",
     exact: true,
     component: lazy(() => import("./views/Login")),
@@ -26,6 +21,9 @@ const routes = [
         path: "/tarefas",
         exact: true,
         component: lazy(() => import("./views/TodoList")),
+      },
+      {
+        component: lazy(() => import("./views/Login")),
       },
     ],
   },

@@ -34,8 +34,9 @@
 
     &__sub-sections {
       display: flex;
-      justify-content: space-between;
+      justify-content: center;
       align-items: center;
+      margin-top: -16px;
 
       & a {
         color: $darker-blue;

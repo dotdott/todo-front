@@ -13,7 +13,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   const handleLogout = async () => {
-    cleanToken();
+    await cleanToken();
 
     dispatch({
       type: Types.CLEAN_USER,
@@ -32,7 +32,7 @@ const Navbar = () => {
           src={moeImg}
           alt=""
           className="navbar__go-home__img"
-          onClick={() => history.push("/")}
+          onClick={() => history.push("/tarefas")}
         />
       </div>
 
