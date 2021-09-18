@@ -110,11 +110,8 @@
             width: 50%;
             text-align: center;
 
-            & p {
-              white-space: nowrap;
-              overflow: hidden;
-              text-overflow: ellipsis;
-            }
+            text-overflow: ellipsis;
+            overflow: hidden;
           }
 
           &__set-concluded {
@@ -127,10 +124,6 @@
             display: flex;
             justify-content: flex-end;
             min-width: 140px;
-
-            &.head {
-              justify-content: center !important;
-            }
           }
         }
       }
