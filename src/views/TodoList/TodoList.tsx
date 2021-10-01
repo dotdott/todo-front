@@ -20,8 +20,8 @@ import CreateTodoModal from "./components/CreateTodoModal";
 import { api } from "../../services/api";
 import { handleErrors } from "../../util/handleErrors";
 import moment from "moment";
-import { useHistory } from "react-router";
-import { getToken } from "../../services/Token";
+
+/*eslint-disable*/
 
 const TodoList = () => {
   const [openDrawer, setOpenDrawer] = useState(true);
@@ -67,7 +67,6 @@ const TodoList = () => {
       });
     } catch (err) {
       const error: IErrorHandlerResults = handleErrors(err);
-
       if (error && error.status) {
         setModalMessage(error.message);
         setShowModalError(true);
@@ -273,7 +272,8 @@ const TodoList = () => {
                 <div className="tasks__list__my-task__status head">Status</div>
               </div>
 
-              {data.length > 0 &&
+              {data &&
+                data.length > 0 &&
                 data.map((task) => (
                   <div className="tasks__list__my-task" key={task.id}>
                     <div className="tasks__list__my-task__title">

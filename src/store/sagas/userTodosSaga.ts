@@ -37,8 +37,8 @@ export function* userTodosSaga(
 
     if (error.response?.status === 404) {
       message = "Falha na tentativa de listar as tarefas";
-    } else if (error.response?.data) {
-      message = error.response.data;
+    } else if (error.response?.error) {
+      message = error.response.error;
     } else {
       message = "Houve um problema com a conexão do servidor =/";
     }

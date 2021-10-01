@@ -8,7 +8,7 @@ interface IModalWarningProps {
   show: boolean;
   handleClose: () => void;
   handleConfirm?: () => void;
-  modalMessage: string;
+  modalMessage?: string;
   modalRef: any;
 }
 

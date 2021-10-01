@@ -33,7 +33,8 @@ const Drawer = ({ handleToggleDrawer, openDrawer }: IDrawerProps) => {
           </div>
 
           <div className="drawer__body custom-scrollbar">
-            {data.length > 0 &&
+            {data &&
+              data.length > 0 &&
               data.map(
                 (task) =>
                   task.has_completed === 1 && (

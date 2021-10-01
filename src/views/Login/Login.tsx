@@ -45,6 +45,7 @@ const Login = () => {
     return setShowModalError(false);
   };
 
+  // eslint-disable-next-line
   const monitoringClick = useCheckIfClickedOutside({
     showModalError,
     handleClose: handleCloseModal,
@@ -70,7 +71,9 @@ const Login = () => {
 
       await setToken(data.token);
 
-      return history.push("/tarefas");
+      setTimeout(() => {
+        return history.push("/tarefas");
+      }, 5000);
     } catch (err) {
       const error: IErrorHandlerResults = handleErrors(err);
 

@@ -4,8 +4,6 @@
   "private": true,
   "dependencies": {
     "@material-ui/core": "^4.12.3",
-    "@testing-library/jest-dom": "^5.11.4",
-    "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
     "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
@@ -54,8 +52,15 @@
     ]
   },
   "devDependencies": {
+    "@testing-library/dom": "^8.6.0",
+    "@testing-library/jest-dom": "^5.14.1",
+    "@testing-library/react": "^12.1.0",
     "@types/react-router-config": "^5.0.3",
     "@types/react-router-dom": "^5.1.8",
+    "@types/testing-library__jest-dom": "^5.14.1",
+    "babel-jest": "26.6.0",
+    "jest": "26.6.0",
+    "jest-dom": "^4.0.0",
     "react-router-config": "^5.1.1"
   }
 }

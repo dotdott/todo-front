@@ -81,7 +81,9 @@ const Register = () => {
 
       await setToken(data.token);
 
-      return history.push("/tarefas");
+      setTimeout(() => {
+        return history.push("/tarefas");
+      }, 5000);
     } catch (err) {
       const error: IErrorHandlerResults = handleErrors(err);
 
