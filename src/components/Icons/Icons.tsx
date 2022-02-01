@@ -10,7 +10,12 @@ interface IIConsProps {
 
 const Icons = ({ name, Styles, ClassName, handleClick }: IIConsProps) => {
   return (
-    <Icon className={`icon ${ClassName}`} style={Styles} onClick={handleClick}>
+    <Icon
+      className={`icon ${ClassName}`}
+      style={Styles}
+      onClick={handleClick}
+      data-testid="icon-test-id"
+    >
       {name}
     </Icon>
   );
