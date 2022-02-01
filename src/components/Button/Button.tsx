@@ -20,6 +20,7 @@ const Button = ({
       style={btnExtraStyles}
       className={`button ${btnClasses}`}
       onClick={btnFunction}
+      data-testid="button-test-id"
     >
       {children}
     </MU.Button>
