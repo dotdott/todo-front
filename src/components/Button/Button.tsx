@@ -4,14 +4,14 @@ import * as MU from "@material-ui/core";
 
 interface IButtonProps {
   btnFunction?: () => void;
-  btnClasses: string;
+  btnClasses?: "_red" | "_blue";
   btnExtraStyles?: {};
   children?: React.ReactNode;
 }
 
 const Button = ({
   btnFunction,
-  btnClasses,
+  btnClasses = "_blue",
   btnExtraStyles,
   children,
 }: IButtonProps) => {
