@@ -15,7 +15,7 @@ describe("Icons Component", () => {
   });
 
   it("Icon should have the black color when clicked the on the icon", () => {
-    render(
+    const { rerender } = render(
       <Icons
         name="home"
         handleClick={changeColorMock}
@@ -28,9 +28,13 @@ describe("Icons Component", () => {
     fireEvent.click(iconElement);
     expect(changeColorMock).toHaveBeenCalled();
 
-    fireEvent.change(iconElement, {
-      target: { style: "color: black" },
-    });
+    rerender(
+      <Icons
+        name="home"
+        handleClick={changeColorMock}
+        Styles={{ color: "black" }}
+      />
+    );
     expect(iconElement.style.color).toBe("black");
   });
 });
