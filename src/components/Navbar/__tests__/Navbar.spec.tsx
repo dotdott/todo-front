@@ -77,4 +77,23 @@ describe("rendering while simulating that HAS an user logged", () => {
     fireEvent.click(navIcon);
     expect(history.location.pathname).toBe("/tarefas");
   });
+
+  it(`click 'Minhas Tarefas' btn and redirect to /tarefas,
+    if route is equal to /tarefas, btn 'Minhas Tarefas'
+    should have 'current' className that indicate it is currently active`, () => {
+    const history = createMemoryHistory();
+    render(
+      <Router history={history}>
+        <Navbar />
+      </Router>
+    );
+
+    const userTaskNavLink = screen.getByText(/Minhas Tarefas/i);
+    expect(userTaskNavLink).toBeInTheDocument();
+
+    fireEvent.click(userTaskNavLink);
+    expect(history.location.pathname).toBe("/tarefas");
+
+    expect(userTaskNavLink).toHaveClass("navbar__navigation__hrefs current");
+  });
 });
