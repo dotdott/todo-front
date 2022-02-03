@@ -14,7 +14,7 @@ const PrivateRoute = ({ route }: any) => {
   }, [history]);
 
   return (
-    <Suspense fallback={<LoadingScreen />}>
+    <Suspense fallback={<LoadingScreen />} data-testid="private-route-id">
       {renderRoutes(route.routes)}
     </Suspense>
   );
