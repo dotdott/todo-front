@@ -1,7 +1,9 @@
 import Navbar from "../index";
-import { render, screen, waitFor } from "src/util/test-utils";
+import { render, screen, waitFor, fireEvent } from "src/util/test-utils";
 
 import { useSelector } from "react-redux";
+import { createMemoryHistory } from "history";
+import { Router } from "react-router-dom";
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -59,5 +61,20 @@ describe("rendering while simulating that HAS an user logged", () => {
     await waitFor(() => {
       expect(screen.queryByText(/Logout/i)).toBeInTheDocument();
     });
+  });
+
+  it("check if mavbar icon is rendered and try to click it and get redirected to '/tarefas'", async () => {
+    const history = createMemoryHistory();
+    render(
+      <Router history={history}>
+        <Navbar />
+      </Router>
+    );
+
+    const navIcon = screen.getByRole("img");
+    expect(navIcon).toBeInTheDocument();
+
+    fireEvent.click(navIcon);
+    expect(history.location.pathname).toBe("/tarefas");
   });
 });
