@@ -7,7 +7,7 @@ export interface IUser {
   id: number;
 }
 
-const INITIAL_STATE = {
+export const INITIAL_STATE = {
   username: "",
   email: "",
 
@@ -19,7 +19,7 @@ export const { Types, Creators } = createActions({
   cleanUser: [],
 });
 
-const addUser: Reducer<IUser, any> = (
+export const addUser: Reducer<IUser, any> = (
   state = INITIAL_STATE,
   action: IUser
 ) => ({
