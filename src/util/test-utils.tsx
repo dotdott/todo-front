@@ -1,19 +1,20 @@
+import { render as rtlRender } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import { Provider } from "react-redux";
 import configureStore from "../store";
 const { store } = configureStore();
 
-type IMockComponent = {
-  Component: () => JSX.Element;
-  rest?: any;
-};
-
-export const MockComponent = ({ Component, rest }: IMockComponent) => {
+export const Wrapper = ({ children }: any) => {
   return (
     <Provider store={store}>
-      <BrowserRouter>
-        <Component {...rest} />
-      </BrowserRouter>
+      <BrowserRouter>{children}</BrowserRouter>
     </Provider>
   );
 };
+
+function render(ui: JSX.Element, { ...renderOptions }: any = {}) {
+  return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
+}
+
+export * from "@testing-library/react";
+export { render };
