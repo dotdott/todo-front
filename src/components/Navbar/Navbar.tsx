@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useHistory } from "react-router-dom";
-import moeImg from "../../assets/moe.png";
-import { IStateUser } from "../../global/@types";
-import { cleanToken } from "../../services/Token";
-import { Types } from "../../store/reducers/userReducer";
-import { Types as TypesTodos } from "../../store/reducers/userTodosReducer";
+import moeImg from "src/assets/moe.png";
+import { IStateUser } from "src/global/@types";
+import { cleanToken } from "src/services/Token";
+import { Types } from "src/store/reducers/userReducer";
+import { Types as TypesTodos } from "src/store/reducers/userTodosReducer";
 import "./styles.scss";
 
 const Navbar = () => {

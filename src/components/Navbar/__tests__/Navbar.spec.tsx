@@ -1,6 +1,6 @@
 import Navbar from "../index";
 import { render, screen, fireEvent } from "@testing-library/react";
-import { MockComponent } from "../../../util/test-utils";
+import { MockComponent } from "src/util/test-utils";
 
 describe("Navbar Component", () => {
   it("should render navbar component correctly", () => {
