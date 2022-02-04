@@ -10,6 +10,10 @@ jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }));
 
+afterAll(() => {
+  jest.restoreAllMocks();
+});
+
 describe("rendering while simulating HAS NO user is logged", () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation(() => {

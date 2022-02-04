@@ -20,6 +20,10 @@ jest.mock("src/components/Button", () => {
   };
 });
 
+afterAll(() => {
+  jest.restoreAllMocks();
+});
+
 describe("acess login page with user id === -1", () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation(() => {
