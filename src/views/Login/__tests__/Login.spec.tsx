@@ -1,6 +1,8 @@
 import { useSelector } from "react-redux";
 import { render } from "src/util/test-utils";
+import { createMemoryHistory } from "history";
 import Login from "..";
+import { Router } from "react-router-dom";
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -44,9 +46,18 @@ describe("acess login page with user id === 1", () => {
     (useSelector as jest.Mock).mockClear();
   });
 
-  it("shouldn't load the login page when an user is logged", () => {
-    const { queryByText } = render(<Login />);
+  it("shouldn't load the login page when an user is logged and redirect user to previous page", () => {
+    const history = createMemoryHistory();
+    const goBackSpy = jest.spyOn(history, "goBack");
+
+    const { queryByText } = render(
+      <Router history={history}>
+        <Login />
+      </Router>
+    );
 
     expect(queryByText(/Acesse sua conta/i)).not.toBeInTheDocument();
+
+    expect(goBackSpy).toHaveBeenCalled();
   });
 });
