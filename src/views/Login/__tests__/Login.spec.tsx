@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { render, fireEvent } from "src/util/test-utils";
+import { render, fireEvent, waitFor } from "src/util/test-utils";
 import { createMemoryHistory } from "history";
 import Login from "..";
 import { Router } from "react-router-dom";
@@ -51,6 +51,17 @@ describe("acess login page with user id === -1", () => {
     fireEvent.click(loginElement);
 
     expect(mockBtnFunction).toHaveBeenCalled();
+  });
+
+  it('tag <a> with text "registre-se" should be in the document and have href that redirect to register page "/registrar"', async () => {
+    const { getByText } = render(<Login />);
+
+    const registerLinkElement = getByText(/Registre-se/i);
+
+    await waitFor(() => {
+      expect(registerLinkElement).toBeInTheDocument();
+      expect(registerLinkElement).toHaveAttribute("href", "/registrar");
+    });
   });
 });
 
