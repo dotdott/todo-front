@@ -1,14 +1,32 @@
-import { useSelector } from "react-redux";
-import { render, fireEvent, waitFor } from "src/util/test-utils";
 import { createMemoryHistory } from "history";
-import Login from "..";
+import { useSelector } from "react-redux";
 import { Router } from "react-router-dom";
-import React from "react";
+import { fireEvent, render, waitFor } from "src/util/test-utils";
+import Login from "..";
+
+const mockUserDB = {
+  email: "vocejogos5@gmail.com",
+  id: 255,
+  username: "simpaaa",
+  password: "gabriel123",
+};
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
   useSelector: jest.fn(),
 }));
+
+const error = { error: "Email/senha não conferem" };
+
+const fakeHandleLogin = (email: string = "", password: string = "") => {
+  try {
+    if (email !== "" && password !== "") return mockUserDB;
+
+    return error;
+  } catch (err) {
+    return error;
+  }
+};
 
 const mockBtnFunction = jest.fn();
 
@@ -77,6 +95,49 @@ describe("acess login page with user id === -1", () => {
     expect(form).toHaveFormValues({
       email: "",
       password: "",
+    });
+  });
+
+  describe("simulating user login with sucessfull credentials", () => {
+    const email = "vocejogos5@gmail.com";
+    const pass = "gabriel123";
+
+    beforeEach(() =>
+      mockBtnFunction.mockImplementation(() => fakeHandleLogin(email, pass))
+    );
+
+    afterEach(() => mockBtnFunction.mockClear());
+
+    it("should fill the form and attempt to log in by clicking in the login button and return mocked user login results", async () => {
+      const { getByRole } = render(<Login />);
+
+      const form = document.querySelector(".auth__input__fields");
+
+      const emailInput = document.querySelector("#auth-email");
+      const passwordInput = document.querySelector("#auth-pass");
+
+      emailInput &&
+        fireEvent.change(emailInput, {
+          target: { value: email },
+        });
+      passwordInput &&
+        fireEvent.change(passwordInput, { target: { value: pass } });
+
+      const loginElement = getByRole("button", { name: "Entrar" });
+
+      await waitFor(() => {
+        expect(form).toHaveFormValues({
+          email: email,
+          password: pass,
+        });
+
+        fireEvent.click(loginElement);
+        expect(mockBtnFunction).toHaveBeenCalled();
+
+        const mockAttempt = new mockBtnFunction(email, pass);
+
+        expect(mockAttempt).toBe(mockUserDB);
+      });
     });
   });
 });
