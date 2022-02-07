@@ -1,7 +1,7 @@
 import { createMemoryHistory } from "history";
 import { useSelector } from "react-redux";
 import { Router } from "react-router-dom";
-import { fireEvent, render, waitFor } from "src/util/test-utils";
+import { fireEvent, mockSelector, render, waitFor } from "src/util/test-utils";
 import Login from "..";
 
 const mockUserDB = {
@@ -44,20 +44,7 @@ afterAll(() => {
 });
 
 describe("acess login page with user id === -1", () => {
-  beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementation(() => {
-      const value = {
-        id: -1,
-      };
-
-      return value;
-    });
-  });
-
-  afterEach(() => {
-    (useSelector as jest.Mock).mockClear();
-  });
-
+  mockSelector(-1);
   it("render login page", () => {
     const { getByText } = render(<Login />);
 
@@ -166,19 +153,7 @@ describe("acess login page with user id === -1", () => {
 });
 
 describe("access login page with user id === 1", () => {
-  beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementation(() => {
-      const value = {
-        id: 1,
-      };
-
-      return value;
-    });
-  });
-
-  afterEach(() => {
-    (useSelector as jest.Mock).mockClear();
-  });
+  mockSelector(1);
 
   it("shouldn't load the login page when an user is logged and redirect user to previous page", () => {
     const history = createMemoryHistory();
