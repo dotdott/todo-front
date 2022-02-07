@@ -13,36 +13,17 @@ afterAll(() => {
   jest.restoreAllMocks();
 });
 
-describe("trying to access register page when an user is logged in", () => {
-  beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementation(() => {
-      const value = {
-        id: 1,
-      };
+describe("acessing register page with no user loggeded", () => {
+  mockSelector(-1);
 
-      return value;
-    });
-  });
+  it("render pages correctly", () => {
+    const { getByText } = render(<Register />);
 
-  afterEach(() => {
-    (useSelector as jest.Mock).mockClear();
-  });
-
-  it("should redirect user back when there is an user logged in.", () => {
-    const history = createMemoryHistory();
-    const goBackSpy = jest.spyOn(history, "goBack");
-
-    render(
-      <Router history={history}>
-        <Register />
-      </Router>
-    );
-
-    expect(goBackSpy).toHaveBeenCalled();
+    expect(getByText(/Crie sua conta/i)).toBeInTheDocument();
   });
 });
 
-describe("trying to access registedr page when an user is logged in", () => {
+describe("trying to access register page when an user is logged in", () => {
   mockSelector(1);
 
   it("should redirect user back when there is an user logged in.", () => {
