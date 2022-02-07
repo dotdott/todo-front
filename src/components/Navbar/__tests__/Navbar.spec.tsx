@@ -1,7 +1,12 @@
 import Navbar from "../index";
-import { render, screen, waitFor, fireEvent } from "src/util/test-utils";
+import {
+  render,
+  screen,
+  waitFor,
+  fireEvent,
+  mockSelector,
+} from "src/util/test-utils";
 
-import { useSelector } from "react-redux";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
@@ -15,19 +20,7 @@ afterAll(() => {
 });
 
 describe("rendering while simulating HAS NO user is logged", () => {
-  beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementation(() => {
-      const value = {
-        id: -1,
-      };
-
-      return value;
-    });
-  });
-
-  afterEach(() => {
-    (useSelector as jest.Mock).mockClear();
-  });
+  mockSelector(-1);
 
   it("should render navbar component correctly", () => {
     render(<Navbar />);
@@ -45,19 +38,7 @@ describe("rendering while simulating HAS NO user is logged", () => {
 });
 
 describe("rendering while simulating that HAS an user logged", () => {
-  beforeEach(() => {
-    (useSelector as jest.Mock).mockImplementation(() => {
-      const value = {
-        id: 1,
-      };
-
-      return value;
-    });
-  });
-
-  afterEach(() => {
-    (useSelector as jest.Mock).mockClear();
-  });
+  mockSelector(1);
 
   it("should show LOGOUT button when there is no user logged", async () => {
     render(<Navbar />);
