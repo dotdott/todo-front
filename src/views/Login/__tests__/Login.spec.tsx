@@ -1,5 +1,4 @@
 import { createMemoryHistory } from "history";
-import { useSelector } from "react-redux";
 import { Router } from "react-router-dom";
 import { fireEvent, mockSelector, render, waitFor } from "src/util/test-utils";
 import Login from "..";
