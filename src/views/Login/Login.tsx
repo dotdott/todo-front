@@ -113,6 +113,7 @@ const Login = () => {
               id="auth-email"
               label="E-mail"
               variant="outlined"
+              name="email"
               className={`${formFields.email !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, email: e.target.value })
@@ -123,6 +124,7 @@ const Login = () => {
             <MU.TextField
               id="auth-pass"
               label="Senha"
+              name="password"
               variant="outlined"
               type="password"
               className={`${formFields.password !== "" ? "its_filleded" : {}}`}

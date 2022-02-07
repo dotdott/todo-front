@@ -3,6 +3,7 @@ import { render, fireEvent, waitFor } from "src/util/test-utils";
 import { createMemoryHistory } from "history";
 import Login from "..";
 import { Router } from "react-router-dom";
+import React from "react";
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),
@@ -67,9 +68,20 @@ describe("acess login page with user id === -1", () => {
       expect(registerLinkElement).toHaveAttribute("href", "/registrar");
     });
   });
+
+  it("form should iniciate empty", async () => {
+    render(<Login />);
+
+    const form = document.querySelector(".auth__input__fields");
+
+    expect(form).toHaveFormValues({
+      email: "",
+      password: "",
+    });
+  });
 });
 
-describe("acess login page with user id === 1", () => {
+describe("access login page with user id === 1", () => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation(() => {
       const value = {
