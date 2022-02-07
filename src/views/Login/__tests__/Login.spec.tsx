@@ -140,6 +140,29 @@ describe("acess login page with user id === -1", () => {
       });
     });
   });
+
+  it("should attempt to login with no correct credentials", async () => {
+    const { getByRole } = render(<Login />);
+    mockBtnFunction.mockImplementation(() => fakeHandleLogin());
+
+    const form = document.querySelector(".auth__input__fields");
+
+    const loginElement = getByRole("button", { name: "Entrar" });
+
+    await waitFor(() => {
+      expect(form).toHaveFormValues({
+        email: "",
+        password: "",
+      });
+
+      fireEvent.click(loginElement);
+      expect(mockBtnFunction).toHaveBeenCalled();
+
+      const mockAttempt = new mockBtnFunction();
+
+      expect(mockAttempt).toBe(error);
+    });
+  });
 });
 
 describe("access login page with user id === 1", () => {
