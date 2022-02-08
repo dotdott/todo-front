@@ -122,6 +122,7 @@ const Register = () => {
               id="auth-username"
               label="Usuário"
               variant="outlined"
+              name="username"
               className={`${formFields.username !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, username: e.target.value })
@@ -133,6 +134,7 @@ const Register = () => {
               id="auth-email"
               label="E-mail"
               variant="outlined"
+              name="email"
               className={`${formFields.email !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, email: e.target.value })
@@ -145,6 +147,7 @@ const Register = () => {
               label="Senha"
               variant="outlined"
               type="password"
+              name="password"
               className={`${formFields.password !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, password: e.target.value })
@@ -157,6 +160,7 @@ const Register = () => {
               label="Confirmar senha"
               variant="outlined"
               type="password"
+              name="password2"
               className={`${formFields.password2 !== "" ? "its_filleded" : {}}`}
               onChange={(e) =>
                 setFormFields({ ...formFields, password2: e.target.value })

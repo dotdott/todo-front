@@ -79,6 +79,24 @@ describe("trying to access register page when an user is logged in", () => {
     fireEvent.click(registerBtn);
     expect(mockBtnFunction).toHaveBeenCalled();
   });
+
+  describe("form functionalities", () => {
+    it("should call register functions when clicked", async () => {
+      render(<Register />);
+
+      const formElement = document.querySelector(".auth__input__fields");
+
+      await waitFor(() => {
+        expect(formElement).toBeInTheDocument();
+        expect(formElement).toHaveFormValues({
+          username: "",
+          email: "",
+          password: "",
+          password2: "",
+        });
+      });
+    });
+  });
 });
 
 describe("displaying error message when state is filled", () => {
