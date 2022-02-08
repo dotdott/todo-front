@@ -81,7 +81,7 @@ describe("trying to access register page when an user is logged in", () => {
   });
 
   describe("form functionalities", () => {
-    it("should call register functions when clicked", async () => {
+    it("form should initiate empty", async () => {
       render(<Register />);
 
       const formElement = document.querySelector(".auth__input__fields");
