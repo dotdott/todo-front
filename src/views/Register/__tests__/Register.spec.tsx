@@ -113,12 +113,11 @@ describe("trying to access register page when an user is logged in", () => {
     it("should fill form values and trigger register function successfuly", async () => {
       render(<Register />);
       const { formElement, ...restFormValues } = getFormValues();
-      const { ...restMockDB } = mockUserDB;
 
-      changeInputValue(restFormValues.email, restMockDB.email);
-      changeInputValue(restFormValues.password, restMockDB.password);
-      changeInputValue(restFormValues.password2, restMockDB.password);
-      changeInputValue(restFormValues.username, restMockDB.username);
+      changeInputValue(restFormValues.email, mockUserDB.email);
+      changeInputValue(restFormValues.password, mockUserDB.password);
+      changeInputValue(restFormValues.password2, mockUserDB.password);
+      changeInputValue(restFormValues.username, mockUserDB.username);
 
       delete mockUserDB.id;
 
