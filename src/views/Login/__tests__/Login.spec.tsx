@@ -4,17 +4,11 @@ import { Router } from "react-router-dom";
 import {
   fireEvent,
   mockSelectorUserID,
+  mockUserDB,
   render,
   waitFor,
 } from "src/util/test-utils";
 import Login from "..";
-
-const mockUserDB = {
-  email: "vocejogos5@gmail.com",
-  id: 255,
-  username: "simpaaa",
-  password: "gabriel123",
-};
 
 jest.mock("react-redux", () => ({
   ...jest.requireActual("react-redux"),

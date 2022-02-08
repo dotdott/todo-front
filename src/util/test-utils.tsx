@@ -32,5 +32,12 @@ const mockSelectorUserID = (id: number = -1) => {
   });
 };
 
+const mockUserDB = {
+  email: "vocejogos5@gmail.com",
+  id: 255,
+  username: "simpaaa",
+  password: "gabriel123",
+};
+
 export * from "@testing-library/react";
-export { render, mockSelectorUserID };
+export { render, mockSelectorUserID, mockUserDB };
