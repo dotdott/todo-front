@@ -29,7 +29,7 @@ export const addUser: Reducer<IUser, any> = (
   id: action.id,
 });
 
-const cleanUser = () => INITIAL_STATE;
+export const cleanUser = () => INITIAL_STATE;
 
 export default createReducer(INITIAL_STATE, {
   [Types.ADD_USER]: addUser,
