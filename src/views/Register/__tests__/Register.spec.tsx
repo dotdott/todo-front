@@ -63,6 +63,10 @@ describe("trying to access register page when an user is logged in", () => {
       expect(loginLinkElement).toHaveAttribute("href", "/login");
     });
   });
+});
+
+describe("displaying error message when state is filled", () => {
+  mockSelectorUserID(1);
 
   it("If there's an error when attempting to register it should be displayed on the document", async () => {
     React.useState = jest.fn().mockReturnValue([mockErrorMessage, {}]);
