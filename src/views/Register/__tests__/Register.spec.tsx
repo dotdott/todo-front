@@ -6,6 +6,9 @@ import {
   render,
   waitFor,
   fireEvent,
+  changeInputValue,
+  mockUserDB,
+  screen,
 } from "src/util/test-utils";
 import Register from "..";
 
@@ -105,6 +108,31 @@ describe("trying to access register page when an user is logged in", () => {
           password2: "",
         });
       });
+    });
+
+    it("should fill form values and trigger register function successfuly", async () => {
+      render(<Register />);
+      const { formElement, ...restFormValues } = getFormValues();
+      const { ...restMockDB } = mockUserDB;
+
+      changeInputValue(restFormValues.email, restMockDB.email);
+      changeInputValue(restFormValues.password, restMockDB.password);
+      changeInputValue(restFormValues.password2, restMockDB.password);
+      changeInputValue(restFormValues.username, restMockDB.username);
+
+      delete mockUserDB.id;
+
+      await waitFor(() => {
+        expect(formElement).toBeInTheDocument();
+        expect(formElement).toHaveFormValues(mockUserDB);
+      });
+
+      const registerBtn = screen.getByText(/Registrar/i);
+
+      expect(registerBtn).toBeInTheDocument();
+
+      fireEvent.click(registerBtn);
+      expect(mockBtnFunction).toHaveBeenCalled();
     });
   });
 });

@@ -32,7 +32,14 @@ const mockSelectorUserID = (id: number = -1) => {
   });
 };
 
-const mockUserDB = {
+type IMockUserDB = {
+  email: string;
+  id?: number;
+  username: string;
+  password: string;
+};
+
+const mockUserDB: IMockUserDB = {
   email: "vocejogos5@gmail.com",
   id: 255,
   username: "simpaaa",
