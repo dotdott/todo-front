@@ -16,7 +16,7 @@ function render(ui: JSX.Element, { ...renderOptions }: any = {}) {
   return rtlRender(ui, { wrapper: Wrapper, ...renderOptions });
 }
 
-const mockSelector = (id: number = -1) => {
+const mockSelectorUserID = (id: number = -1) => {
   beforeEach(() => {
     (useSelector as jest.Mock).mockImplementation(() => {
       const value = {
@@ -33,4 +33,4 @@ const mockSelector = (id: number = -1) => {
 };
 
 export * from "@testing-library/react";
-export { render, mockSelector };
+export { render, mockSelectorUserID };

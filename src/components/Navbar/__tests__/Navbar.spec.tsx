@@ -4,7 +4,7 @@ import {
   screen,
   waitFor,
   fireEvent,
-  mockSelector,
+  mockSelectorUserID,
 } from "src/util/test-utils";
 
 import { createMemoryHistory } from "history";
@@ -20,7 +20,7 @@ afterAll(() => {
 });
 
 describe("rendering while simulating HAS NO user is logged", () => {
-  mockSelector(-1);
+  mockSelectorUserID(-1);
 
   it("should render navbar component correctly", () => {
     render(<Navbar />);
@@ -38,7 +38,7 @@ describe("rendering while simulating HAS NO user is logged", () => {
 });
 
 describe("rendering while simulating that HAS an user logged", () => {
-  mockSelector(1);
+  mockSelectorUserID(1);
 
   it("should show LOGOUT button when there is no user logged", async () => {
     render(<Navbar />);

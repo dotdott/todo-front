@@ -1,6 +1,6 @@
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { mockSelector, render } from "src/util/test-utils";
+import { mockSelectorUserID, render } from "src/util/test-utils";
 import Register from "..";
 
 jest.mock("react-redux", () => ({
@@ -13,7 +13,7 @@ afterAll(() => {
 });
 
 describe("acessing register page with no user loggeded", () => {
-  mockSelector(-1);
+  mockSelectorUserID(-1);
 
   it("render pages correctly", () => {
     const { getByText } = render(<Register />);
@@ -23,7 +23,7 @@ describe("acessing register page with no user loggeded", () => {
 });
 
 describe("trying to access register page when an user is logged in", () => {
-  mockSelector(1);
+  mockSelectorUserID(1);
 
   it("should redirect user back when there is an user logged in.", () => {
     const history = createMemoryHistory();
