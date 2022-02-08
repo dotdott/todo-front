@@ -6,11 +6,36 @@ import reducer, {
   Creators,
 } from "../userReducer";
 
+const mockUserReducer = {
+  username: "Gabriel",
+  email: "gabriel.jodas@test.com",
+  id: 1,
+};
+
 describe("types", () => {
   it("should export correctly its types", () => {
     expect(TypesUser).toEqual({
       ADD_USER: "ADD_USER",
       CLEAN_USER: "CLEAN_USER",
+    });
+  });
+});
+
+describe("Creators", () => {
+  describe("addUser", () => {
+    it("should return the expected action", () => {
+      expect(Creators.addUser()).toEqual({
+        type: TypesUser.ADD_USER,
+      });
+    });
+
+    it("should receive expected data when passed in creator action", () => {
+      const m = mockUserReducer;
+
+      expect(Creators.addUser(m.username, m.email, m.id)).toEqual({
+        type: TypesUser.ADD_USER,
+        ...mockUserReducer,
+      });
     });
   });
 });
