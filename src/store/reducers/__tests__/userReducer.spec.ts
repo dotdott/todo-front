@@ -49,6 +49,12 @@ describe("Creators", () => {
   });
 
   describe("cleanUser", () => {
+    it("should return the expected action", () => {
+      expect(Creators.cleanUser()).toEqual({
+        type: TypesUser.CLEAN_USER,
+      });
+    });
+
     it("should ignore extra arguments", () => {
       expect(Creators.cleanUser({ value: "new arg" })).toEqual({
         type: TypesUser.CLEAN_USER,
