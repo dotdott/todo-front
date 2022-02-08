@@ -1,7 +1,12 @@
 import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
-import { mockSelectorUserID, render, waitFor } from "src/util/test-utils";
+import {
+  mockSelectorUserID,
+  render,
+  waitFor,
+  fireEvent,
+} from "src/util/test-utils";
 import Register from "..";
 
 jest.mock("react-redux", () => ({
@@ -9,13 +14,13 @@ jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }));
 
-const mockLoginBtnFunction = jest.fn();
+const mockBtnFunction = jest.fn();
 
 jest.mock("src/components/Button", () => {
   return {
     __esModule: true,
     default: () => {
-      return <button onClick={mockLoginBtnFunction}>Registrar</button>;
+      return <button onClick={mockBtnFunction}>Registrar</button>;
     },
   };
 });
@@ -62,6 +67,17 @@ describe("trying to access register page when an user is logged in", () => {
       expect(loginLinkElement).toBeInTheDocument();
       expect(loginLinkElement).toHaveAttribute("href", "/login");
     });
+  });
+
+  it("should call register functions when clicked", () => {
+    const { getByText } = render(<Register />);
+
+    const registerBtn = getByText(/Registrar/i);
+
+    expect(registerBtn).toBeInTheDocument();
+
+    fireEvent.click(registerBtn);
+    expect(mockBtnFunction).toHaveBeenCalled();
   });
 });
 
