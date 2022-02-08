@@ -46,7 +46,7 @@ const mockUserDB: IMockUserDB = {
   password: "gabriel123",
 };
 
-const changeInputValue = (input: any, val: any) => {
+const changeInputValue = (input: Element | null, val: string | number) => {
   if (input) {
     fireEvent.change(input, { target: { value: val } });
   }
