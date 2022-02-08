@@ -1,4 +1,5 @@
 import { createMemoryHistory } from "history";
+import React from "react";
 import { Router } from "react-router-dom";
 import {
   fireEvent,
@@ -49,6 +50,7 @@ afterAll(() => {
 
 describe("acess login page with user id === -1", () => {
   mockSelectorUserID(-1);
+
   it("render login page", () => {
     const { getByText } = render(<Login />);
 
@@ -172,5 +174,17 @@ describe("access login page with user id === 1", () => {
     expect(queryByText(/Acesse sua conta/i)).not.toBeInTheDocument();
 
     expect(goBackSpy).toHaveBeenCalled();
+  });
+});
+
+describe("should show error when error state is filled", () => {
+  mockSelectorUserID(-1);
+
+  it("If there's an error when attempting to login it should be displayed on the document", async () => {
+    React.useState = jest.fn().mockReturnValue(["Error error", {}]);
+
+    const { getByText } = render(<Login />);
+
+    expect(getByText(/Error error/i)).toBeInTheDocument();
   });
 });
