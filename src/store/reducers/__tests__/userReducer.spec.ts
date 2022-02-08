@@ -75,4 +75,10 @@ describe("reducers", () => {
       ).toEqual(mockUserReducer);
     });
   });
+
+  describe("cleanUser", () => {
+    it("should return user reducer to its initial state", () => {
+      expect(cleanUser()).toEqual(INITIAL_STATE);
+    });
+  });
 });
