@@ -2,6 +2,7 @@ import { createMemoryHistory } from "history";
 import React from "react";
 import { Router } from "react-router-dom";
 import {
+  changeInputValue,
   fireEvent,
   mockSelectorUserID,
   mockUserDB,
@@ -103,12 +104,8 @@ describe("acess login page with user id === -1", () => {
       const emailInput = document.querySelector("#auth-email");
       const passwordInput = document.querySelector("#auth-pass");
 
-      emailInput &&
-        fireEvent.change(emailInput, {
-          target: { value: email },
-        });
-      passwordInput &&
-        fireEvent.change(passwordInput, { target: { value: pass } });
+      changeInputValue(emailInput, email);
+      changeInputValue(passwordInput, pass);
 
       const loginElement = getByRole("button", { name: "Entrar" });
 

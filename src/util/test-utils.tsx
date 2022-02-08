@@ -1,6 +1,6 @@
-import { render as rtlRender } from "@testing-library/react";
-import { BrowserRouter } from "react-router-dom";
+import { render as rtlRender, fireEvent } from "@testing-library/react";
 import { Provider, useSelector } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 import configureStore from "../store";
 const { store } = configureStore();
 
@@ -39,5 +39,11 @@ const mockUserDB = {
   password: "gabriel123",
 };
 
+const changeInputValue = (input: any, val: any) => {
+  if (input) {
+    fireEvent.change(input, { target: { value: val } });
+  }
+};
+
 export * from "@testing-library/react";
-export { render, mockSelectorUserID, mockUserDB };
+export { render, mockSelectorUserID, mockUserDB, changeInputValue };

@@ -32,6 +32,16 @@ afterAll(() => {
 const mockErrorMessage =
   "An error has ocurried when attempting to register a new account.";
 
+const getFormValues = () => {
+  const formElement = document.querySelector(".auth__input__fields");
+  const username = document.querySelector("#auth-username");
+  const email = document.querySelector("#auth-email");
+  const password = document.querySelector("#auth-password");
+  const password2 = document.querySelector("#auth-password2");
+
+  return { formElement, username, email, password, password2 };
+};
+
 describe("acessing register page with no user loggeded", () => {
   mockSelectorUserID(-1);
 
@@ -84,7 +94,7 @@ describe("trying to access register page when an user is logged in", () => {
     it("form should initiate empty", async () => {
       render(<Register />);
 
-      const formElement = document.querySelector(".auth__input__fields");
+      const { formElement } = getFormValues();
 
       await waitFor(() => {
         expect(formElement).toBeInTheDocument();
