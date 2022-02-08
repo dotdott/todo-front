@@ -62,3 +62,17 @@ describe("Creators", () => {
     });
   });
 });
+
+describe("reducers", () => {
+  describe("addUser", () => {
+    it("should not returns action type, and update userReducer with passed values", () => {
+      expect(addUser(undefined, mockUserReducer)).toEqual(mockUserReducer);
+    });
+
+    it("should ignore accept extra args", () => {
+      expect(
+        addUser(undefined, { ...mockUserReducer, newValue: "value" })
+      ).toEqual(mockUserReducer);
+    });
+  });
+});
