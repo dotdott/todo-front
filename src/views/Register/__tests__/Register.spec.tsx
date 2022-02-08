@@ -1,6 +1,6 @@
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
-import { mockSelectorUserID, render } from "src/util/test-utils";
+import { mockSelectorUserID, render, waitFor } from "src/util/test-utils";
 import Register from "..";
 
 jest.mock("react-redux", () => ({
@@ -36,5 +36,16 @@ describe("trying to access register page when an user is logged in", () => {
     );
 
     expect(goBackSpy).toHaveBeenCalled();
+  });
+
+  it("login button should be in the document with href redirecting to login page", async () => {
+    const { getByText } = render(<Register />);
+
+    const loginLinkElement = getByText(/login/i);
+
+    await waitFor(() => {
+      expect(loginLinkElement).toBeInTheDocument();
+      expect(loginLinkElement).toHaveAttribute("href", "/login");
+    });
   });
 });
