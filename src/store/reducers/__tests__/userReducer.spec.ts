@@ -37,5 +37,22 @@ describe("Creators", () => {
         ...mockUserReducer,
       });
     });
+
+    it("should ignore extra arguments", () => {
+      const m = mockUserReducer;
+
+      expect(Creators.addUser(m.username, m.email, m.id, "new value")).toEqual({
+        type: TypesUser.ADD_USER,
+        ...mockUserReducer,
+      });
+    });
+  });
+
+  describe("cleanUser", () => {
+    it("should ignore extra arguments", () => {
+      expect(Creators.cleanUser({ value: "new arg" })).toEqual({
+        type: TypesUser.CLEAN_USER,
+      });
+    });
   });
 });
