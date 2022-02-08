@@ -29,7 +29,7 @@ const Register = () => {
     password: "",
     password2: "",
   });
-  const [errorMessage, setErrorMessage] = useState("");
+  const [errorMessage, setErrorMessage] = React.useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isEnteringPage, setIsEnteringPage] = useState(false);
   const [showModalError, setShowModalError] = useState(false);

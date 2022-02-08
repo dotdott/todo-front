@@ -1,4 +1,5 @@
 import { createMemoryHistory } from "history";
+import React from "react";
 import { Router } from "react-router-dom";
 import { mockSelectorUserID, render, waitFor } from "src/util/test-utils";
 import Register from "..";
@@ -8,9 +9,23 @@ jest.mock("react-redux", () => ({
   useSelector: jest.fn(),
 }));
 
+const mockLoginBtnFunction = jest.fn();
+
+jest.mock("src/components/Button", () => {
+  return {
+    __esModule: true,
+    default: () => {
+      return <button onClick={mockLoginBtnFunction}>Registrar</button>;
+    },
+  };
+});
+
 afterAll(() => {
   jest.restoreAllMocks();
 });
+
+const mockErrorMessage =
+  "An error has ocurried when attempting to register a new account.";
 
 describe("acessing register page with no user loggeded", () => {
   mockSelectorUserID(-1);
@@ -46,6 +61,18 @@ describe("trying to access register page when an user is logged in", () => {
     await waitFor(() => {
       expect(loginLinkElement).toBeInTheDocument();
       expect(loginLinkElement).toHaveAttribute("href", "/login");
+    });
+  });
+
+  it("If there's an error when attempting to register it should be displayed on the document", async () => {
+    React.useState = jest.fn().mockReturnValue([mockErrorMessage, {}]);
+
+    const { getByText } = render(<Register />);
+
+    const loginLinkElement = getByText(mockErrorMessage);
+
+    await waitFor(() => {
+      expect(loginLinkElement).toBeInTheDocument();
     });
   });
 });
