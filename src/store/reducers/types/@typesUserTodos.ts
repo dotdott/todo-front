@@ -23,20 +23,20 @@ export interface IUserTodosRequestAction {
   has_completed: number;
 }
 
-export interface IUserTodosSuccess {
+export interface IUserTodosSuccessAction {
   type: "USER_TODOS_SUCCESS";
   data: [];
 }
 
-export interface IUserTodosFailure {
+export interface IUserTodosFailureAction {
   type: "USER_TODOS_FAILURE";
   errorMessage: string;
 }
 
-export interface ICleanMessageError {
+export interface ICleanMessageErrorAction {
   type: "CLEAN_MESSAGE_ERROR";
 }
-export interface IUpdateTodoList {
+export interface IUpdateTodoListAction {
   type: "UPDATE_TODO_LIST";
   data: [];
 }

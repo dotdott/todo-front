@@ -1,12 +1,12 @@
 import { Reducer } from "redux";
 import { createActions, createReducer } from "reduxsauce";
 import {
-  ICleanMessageError,
-  IUpdateTodoList,
-  IUserTodosFailure,
+  ICleanMessageErrorAction,
+  IUpdateTodoListAction,
+  IUserTodosFailureAction,
   IUserTodosReducer,
   IUserTodosRequestAction,
-  IUserTodosSuccess,
+  IUserTodosSuccessAction,
 } from "./types/@typesUserTodos";
 
 export const INITIAL_STATE = {
@@ -45,20 +45,20 @@ export const userTodosRequest: Reducer<
   isLoading: true,
 });
 
-export const userTodosSuccess: Reducer<IUserTodosReducer, IUserTodosSuccess> = (
-  state = INITIAL_STATE,
-  action
-) => ({
+export const userTodosSuccess: Reducer<
+  IUserTodosReducer,
+  IUserTodosSuccessAction
+> = (state = INITIAL_STATE, action) => ({
   ...state,
   data: action.data,
   has_completed: 0,
   isLoading: false,
 });
 
-export const userTodosFailure: Reducer<IUserTodosReducer, IUserTodosFailure> = (
-  state = INITIAL_STATE,
-  action
-) => ({
+export const userTodosFailure: Reducer<
+  IUserTodosReducer,
+  IUserTodosFailureAction
+> = (state = INITIAL_STATE, action) => ({
   ...state,
   errorMessage: action.errorMessage,
   has_completed: 0,
@@ -69,16 +69,16 @@ export const cleanUserTodos = () => INITIAL_STATE;
 
 export const cleanMessageError: Reducer<
   IUserTodosReducer,
-  ICleanMessageError
+  ICleanMessageErrorAction
 > = (state = INITIAL_STATE, action) => ({
   ...state,
   errorMessage: "",
 });
 
-export const updateTodoList: Reducer<IUserTodosReducer, IUpdateTodoList> = (
-  state = INITIAL_STATE,
-  action
-) => ({
+export const updateTodoList: Reducer<
+  IUserTodosReducer,
+  IUpdateTodoListAction
+> = (state = INITIAL_STATE, action) => ({
   ...state,
   data: action.data,
 });
