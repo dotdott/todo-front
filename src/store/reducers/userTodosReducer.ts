@@ -1,19 +1,13 @@
 import { Reducer } from "redux";
 import { createActions, createReducer } from "reduxsauce";
-import { IUserTodos } from "../../global/@types";
-
-export interface IUserTodosReducer {
-  search: {};
-  page: number;
-  perPage: number;
-  isLoading: boolean;
-
-  user_id: number;
-  has_completed: number;
-
-  data: IUserTodos[];
-  errorMessage: string;
-}
+import {
+  ICleanMessageError,
+  IUpdateTodoList,
+  IUserTodosFailure,
+  IUserTodosReducer,
+  IUserTodosRequestAction,
+  IUserTodosSuccess,
+} from "./types/@typesUserTodos";
 
 export const INITIAL_STATE = {
   search: {},
@@ -38,10 +32,10 @@ export const { Types, Creators } = createActions({
   updateTodoList: ["data"],
 });
 
-export const userTodosRequest: Reducer<IUserTodosReducer, any> = (
-  state = INITIAL_STATE,
-  action: IUserTodosReducer
-) => ({
+export const userTodosRequest: Reducer<
+  IUserTodosReducer,
+  IUserTodosRequestAction
+> = (state = INITIAL_STATE, action) => ({
   ...state,
   search: action.search,
   page: action.page,
@@ -51,9 +45,9 @@ export const userTodosRequest: Reducer<IUserTodosReducer, any> = (
   isLoading: true,
 });
 
-export const userTodosSuccess: Reducer<IUserTodosReducer, any> = (
+export const userTodosSuccess: Reducer<IUserTodosReducer, IUserTodosSuccess> = (
   state = INITIAL_STATE,
-  action: IUserTodosReducer
+  action
 ) => ({
   ...state,
   data: action.data,
@@ -61,9 +55,9 @@ export const userTodosSuccess: Reducer<IUserTodosReducer, any> = (
   isLoading: false,
 });
 
-export const userTodosFailure: Reducer<IUserTodosReducer, any> = (
+export const userTodosFailure: Reducer<IUserTodosReducer, IUserTodosFailure> = (
   state = INITIAL_STATE,
-  action: IUserTodosReducer
+  action
 ) => ({
   ...state,
   errorMessage: action.errorMessage,
@@ -73,17 +67,17 @@ export const userTodosFailure: Reducer<IUserTodosReducer, any> = (
 
 export const cleanUserTodos = () => INITIAL_STATE;
 
-export const cleanMessageError: Reducer<IUserTodosReducer, any> = (
-  state = INITIAL_STATE,
-  action: IUserTodosReducer
-) => ({
+export const cleanMessageError: Reducer<
+  IUserTodosReducer,
+  ICleanMessageError
+> = (state = INITIAL_STATE, action) => ({
   ...state,
   errorMessage: "",
 });
 
-export const updateTodoList: Reducer<IUserTodosReducer, any> = (
+export const updateTodoList: Reducer<IUserTodosReducer, IUpdateTodoList> = (
   state = INITIAL_STATE,
-  action: IUserTodosReducer
+  action
 ) => ({
   ...state,
   data: action.data,
