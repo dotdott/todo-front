@@ -1,11 +1,6 @@
 import { Reducer } from "redux";
 import { createActions, createReducer } from "reduxsauce";
-
-export interface IUser {
-  username: string;
-  email: string;
-  id: number;
-}
+import { IAddUserAction, IUser } from "./types/@typesUserReducer";
 
 export const INITIAL_STATE = {
   username: "",
@@ -19,9 +14,9 @@ export const { Types, Creators } = createActions({
   cleanUser: [],
 });
 
-export const addUser: Reducer<IUser, any> = (
+export const addUser: Reducer<IUser, IAddUserAction> = (
   state = INITIAL_STATE,
-  action: IUser
+  action
 ) => ({
   ...state,
   username: action.username,

@@ -6,7 +6,8 @@ import { api } from "../../services/api";
 import { setToken } from "../../services/Token";
 
 import { useHistory } from "react-router-dom";
-import { IUser, Types } from "../../store/reducers/userReducer";
+import { IUser } from "src/store/reducers/types/@typesUserReducer";
+import { Types } from "../../store/reducers/userReducer";
 import { useEffect } from "react";
 import { IErrorHandlerResults, IStateUser } from "../../global/@types";
 import { handleErrors } from "../../util/handleErrors";

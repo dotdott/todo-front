@@ -1,5 +1,5 @@
+import { IUser } from "src/store/reducers/types/@typesUserReducer";
 import { IUserTodosReducer } from "src/store/reducers/types/@typesUserTodos";
-import { IUser } from "../store/reducers/userReducer";
 
 export interface IUserTodos {
   id: number;
