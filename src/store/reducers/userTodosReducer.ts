@@ -9,6 +9,7 @@ export interface IUserTodosReducer {
   isLoading: boolean;
 
   user_id: number;
+  has_completed: number;
 
   data: IUserTodos[];
   errorMessage: string;
@@ -20,6 +21,7 @@ export const INITIAL_STATE = {
   perPage: 10,
   isLoading: false,
   user_id: -1,
+  has_completed: 0,
 
   data: [],
 
@@ -27,7 +29,7 @@ export const INITIAL_STATE = {
 };
 
 export const { Types, Creators } = createActions({
-  userTodosRequest: ["username", "email", "token", "user_id"],
+  userTodosRequest: ["search", "page", "perPage", "user_id", "has_completed"],
   userTodosSuccess: ["data"],
   userTodosFailure: ["errorMessage"],
 
@@ -45,6 +47,7 @@ export const userTodosRequest: Reducer<IUserTodosReducer, any> = (
   page: action.page,
   perPage: action.perPage,
   user_id: action.user_id,
+  has_completed: action.has_completed,
   isLoading: true,
 });
 
@@ -54,6 +57,7 @@ export const userTodosSuccess: Reducer<IUserTodosReducer, any> = (
 ) => ({
   ...state,
   data: action.data,
+  has_completed: 0,
   isLoading: false,
 });
 
@@ -63,20 +67,11 @@ export const userTodosFailure: Reducer<IUserTodosReducer, any> = (
 ) => ({
   ...state,
   errorMessage: action.errorMessage,
+  has_completed: 0,
   isLoading: false,
 });
 
-export const cleanUserTodos = () => ({
-  search: {},
-  page: 0,
-  perPage: 10,
-  isLoading: false,
-  user_id: -1,
-
-  data: [],
-
-  errorMessage: "",
-});
+export const cleanUserTodos = () => INITIAL_STATE;
 
 export const cleanMessageError: Reducer<IUserTodosReducer, any> = (
   state = INITIAL_STATE,
