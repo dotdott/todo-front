@@ -5,7 +5,7 @@ export interface IUser {
 }
 
 export interface IAddUserAction {
-  type: "USER_TODOS_SUCCESS";
+  type: "ADD_USER";
   username: string;
   email: string;
   id: number;
