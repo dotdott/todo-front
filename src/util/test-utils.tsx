@@ -1,6 +1,7 @@
 import { render as rtlRender, fireEvent } from "@testing-library/react";
 import { Provider, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
+import { IUserTodos } from "src/global/@types";
 import configureStore from "../store";
 const { store } = configureStore();
 
@@ -46,6 +47,25 @@ const mockUserDB: IMockUserDB = {
   password: "gabriel123",
 };
 
+const mockTodos: IUserTodos[] = [
+  {
+    task: "New Task",
+    description: "Yeaa!! task finished 👵",
+    finished_at: "03/03/2022 15:30",
+    has_completed: 1,
+    id: 101,
+    user_id: 1,
+  },
+  {
+    task: "New Uncompleted Task",
+    description: "Should do this task soon.",
+    finished_at: "",
+    has_completed: 0,
+    id: 102,
+    user_id: 1,
+  },
+];
+
 const changeInputValue = (input: Element | null, val: string | number) => {
   if (input) {
     fireEvent.change(input, { target: { value: val } });
@@ -53,4 +73,4 @@ const changeInputValue = (input: Element | null, val: string | number) => {
 };
 
 export * from "@testing-library/react";
-export { render, mockSelectorUserID, mockUserDB, changeInputValue };
+export { render, mockSelectorUserID, mockUserDB, mockTodos, changeInputValue };
