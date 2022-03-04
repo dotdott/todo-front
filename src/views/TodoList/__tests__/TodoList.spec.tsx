@@ -51,4 +51,30 @@ describe("should have mocked todo list rendered", () => {
       });
     });
   });
+
+  describe("testing when task is COMPLETED (has_completed === 1)", () => {
+    spySelector({ ...mockSelectors.data[0] });
+
+    it("should show the time the task was finished", () => {
+      render(<TodoList />);
+
+      const descriptionStatusElement = document.querySelector(
+        ".tasks__list__my-task__status"
+      )?.innerHTML;
+
+      waitFor(() => {
+        expect(descriptionStatusElement).toBe(
+          mockSelectors.data[0].finished_at
+        );
+      });
+    });
+
+    it("status toggle switched should be TRUE", () => {
+      const { getByTestId } = render(<TodoList />);
+
+      waitFor(() => {
+        expect(getByTestId("task-status-switch")).toBeChecked();
+      });
+    });
+  });
 });
