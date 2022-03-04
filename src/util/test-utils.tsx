@@ -1,3 +1,5 @@
+import * as redux from "react-redux";
+
 import { render as rtlRender, fireEvent } from "@testing-library/react";
 import { Provider, useSelector } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
@@ -72,5 +74,24 @@ const changeInputValue = (input: Element | null, val: string | number) => {
   }
 };
 
+const spySelector = (values: any = {}) => {
+  beforeEach(() => {
+    const spy = jest.spyOn(redux, "useSelector");
+
+    spy.mockReturnValue(values);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
+};
+
 export * from "@testing-library/react";
-export { render, mockSelectorUserID, mockUserDB, mockTodos, changeInputValue };
+export {
+  render,
+  mockSelectorUserID,
+  mockUserDB,
+  mockTodos,
+  changeInputValue,
+  spySelector,
+};

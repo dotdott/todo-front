@@ -1,5 +1,4 @@
-import * as redux from "react-redux";
-import { mockTodos, render, waitFor } from "src/util/test-utils";
+import { mockTodos, render, spySelector, waitFor } from "src/util/test-utils";
 import TodoList from "..";
 
 const mockSelectors = {
@@ -18,15 +17,7 @@ describe("TodoList page", () => {
 });
 
 describe("should have mocked todo list rendered", () => {
-  beforeEach(() => {
-    const spy = jest.spyOn(redux, "useSelector");
-
-    spy.mockReturnValue(mockSelectors);
-  });
-
-  afterEach(() => {
-    jest.restoreAllMocks();
-  });
+  spySelector(mockSelectors);
 
   it("render mockTodos", () => {
     const { getByText } = render(<TodoList />);
