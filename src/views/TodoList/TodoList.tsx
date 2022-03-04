@@ -308,6 +308,7 @@ const TodoList = () => {
                           />
                         }
                         label=""
+                        data-testid="task-status-switch"
                       />
                     </div>
                     <div className="tasks__list__my-task__status">

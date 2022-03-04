@@ -27,4 +27,28 @@ describe("should have mocked todo list rendered", () => {
       expect(getByText(/New Uncompleted Task/i)).toBeInTheDocument();
     });
   });
+
+  describe("testing when task is INCOMPLETED (has_completed === 0)", () => {
+    spySelector({ ...mockSelectors.data[1] });
+
+    it("should show task description 'em andamento'", () => {
+      render(<TodoList />);
+
+      const descriptionStatusElement = document.querySelector(
+        ".tasks__list__my-task__status"
+      )?.innerHTML;
+
+      waitFor(() => {
+        expect(descriptionStatusElement).toBe("Em andamento");
+      });
+    });
+
+    it("status toggle switched should be false", () => {
+      const { getByTestId } = render(<TodoList />);
+
+      waitFor(() => {
+        expect(getByTestId("task-status-switch")).not.toBeChecked();
+      });
+    });
+  });
 });
