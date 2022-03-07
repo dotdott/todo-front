@@ -1,4 +1,4 @@
-import { render } from "src/util/test-utils";
+import { render, fireEvent } from "src/util/test-utils";
 import CreateTodoModal from "..";
 
 const showModal = jest.fn();
@@ -23,5 +23,21 @@ describe("Modal should open display the create modal layout", () => {
 
     expect(getByText(/Crie uma nova tarefa!/i)).toBeInTheDocument();
     expect(getByText(/CRIAR NOVA TAREFA/i)).toBeInTheDocument();
+  });
+
+  it("should close modal when clicked in closeBtn", () => {
+    const { getByText, rerender } = setup();
+
+    const closeIcon = getByText(/close/i);
+    fireEvent.click(closeIcon);
+
+    rerender(
+      <CreateTodoModal
+        show={showModal()}
+        handleClose={closeModal}
+        modalRef={modalRef}
+      />
+    );
+    expect(document.querySelector(".modal__todo")).not.toBeInTheDocument();
   });
 });
