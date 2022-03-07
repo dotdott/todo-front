@@ -11,7 +11,7 @@ const openDrawer = jest.fn(() => true);
 const handleToggleDrawer = openDrawer.mockReturnValue(!openDrawer());
 
 describe("Drawer component", () => {
-  it("render component correctly when openDrawer status is open", () => {
+  it("render component content when drawer is open and drawer wrapper container should have class 'open'", () => {
     const { getByText } = render(
       <Drawer
         openDrawer={openDrawer()}
@@ -20,11 +20,15 @@ describe("Drawer component", () => {
     );
 
     waitFor(() => {
+      expect(
+        document.querySelector(".drawer__wrapper.open")
+      ).toBeInTheDocument();
+
       expect(getByText(/Completados/i)).toBeInTheDocument();
     });
   });
 
-  it("toggle the drawer when clicked in the button to close/open it.", () => {
+  it("when toggled the drawer, if it is open, should not render drawer content and drawer container should have class 'closed'", () => {
     const { getByText, getByTestId } = render(
       <Drawer
         openDrawer={openDrawer()}
@@ -34,6 +38,11 @@ describe("Drawer component", () => {
 
     waitFor(() => {
       fireEvent.click(getByTestId("toggle-drawer-test"));
+
+      expect(
+        document.querySelector(".drawer__wrapper.closed")
+      ).toBeInTheDocument();
+
       expect(getByText(/Completados/i)).not.toBeInTheDocument();
     });
   });
