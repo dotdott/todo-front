@@ -28,6 +28,7 @@ const Drawer = ({ handleToggleDrawer, openDrawer }: IDrawerProps) => {
                 name="keyboard_double_arrow_left"
                 Styles={{ color: "#fff" }}
                 handleClick={handleToggleDrawer}
+                data-testid="toggle-drawer-test"
               />
             </div>
           </div>
