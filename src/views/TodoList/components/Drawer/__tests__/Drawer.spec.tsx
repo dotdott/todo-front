@@ -5,7 +5,7 @@ const openDrawer = jest.fn(() => true);
 const handleToggleDrawer = openDrawer.mockReturnValue(!openDrawer());
 
 describe("Drawer component", () => {
-  it("render component correctly", () => {
+  it("render component correctly when openDrawer status is open", () => {
     const { getByText } = render(
       <Drawer
         openDrawer={openDrawer()}
