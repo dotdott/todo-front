@@ -67,13 +67,29 @@ describe("Creators", () => {
 
 describe("reducers", () => {
   describe("userTodosRequest", () => {
-    it("should ignore type argument, and return full state values with updated values from arguments", () => {
+    it("should ignore type argument, and return default state values and updated passed values from arguments", () => {
       expect(
         userTodosRequest(undefined, {
           ...mockUserTodosState,
           type: "USER_TODOS_REQUEST",
         })
       ).toEqual({ ...INITIAL_STATE, ...mockUserTodosState, isLoading: true });
+    });
+  });
+
+  describe("userTodosSuccess", () => {
+    it("should ignore type argument, and return default state values and updated passed values from arguments", () => {
+      expect(
+        userTodosSuccess(undefined, {
+          data: [],
+          type: "USER_TODOS_SUCCESS",
+        })
+      ).toEqual({
+        ...INITIAL_STATE,
+        data: [],
+        isLoading: false,
+        has_completed: 0,
+      });
     });
   });
 });
