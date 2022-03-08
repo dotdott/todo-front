@@ -10,6 +10,14 @@ import {
   Creators,
 } from "../userTodosReducer";
 
+const mockUserTodosState = {
+  search: { value: "any" },
+  page: 0,
+  perPage: 10,
+  user_id: 100,
+  has_completed: 1,
+};
+
 describe("types", () => {
   it("should export correctly its types", () => {
     expect(TypesUserTodos).toEqual({
@@ -53,6 +61,19 @@ describe("Creators", () => {
         type: TypesUserTodos.USER_TODOS_REQUEST,
         ...paramsTypes,
       });
+    });
+  });
+});
+
+describe("reducers", () => {
+  describe("userTodosRequest", () => {
+    it("should ignore type argument, and return full state values with updated values from arguments", () => {
+      expect(
+        userTodosRequest(undefined, {
+          ...mockUserTodosState,
+          type: "USER_TODOS_REQUEST",
+        })
+      ).toEqual({ ...INITIAL_STATE, ...mockUserTodosState, isLoading: true });
     });
   });
 });
