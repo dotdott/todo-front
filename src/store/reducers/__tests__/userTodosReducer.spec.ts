@@ -92,4 +92,20 @@ describe("reducers", () => {
       });
     });
   });
+
+  describe("userTodosFailure", () => {
+    it("should ignore type argument, and return default state values and updated passed values from arguments", () => {
+      expect(
+        userTodosFailure(undefined, {
+          errorMessage: "some error message",
+          type: "USER_TODOS_FAILURE",
+        })
+      ).toEqual({
+        ...INITIAL_STATE,
+        errorMessage: "some error message",
+        isLoading: false,
+        has_completed: 0,
+      });
+    });
+  });
 });
