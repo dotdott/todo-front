@@ -53,13 +53,27 @@ describe("modal inputs", () => {
     it("should start description input empty", () => {
       setup();
 
-      const titleInput = (
+      const descriptionInput = (
         document.querySelector(
           ".modal__todo__body__description-field"
         ) as HTMLInputElement
       ).value;
 
-      expect(titleInput).toBe("");
+      expect(descriptionInput).toBe("");
+    });
+
+    it("checkbox should start UNCHECKED", () => {
+      const { getByTestId } = setup();
+
+      const checkboxInput = getByTestId("checkbox-testid");
+
+      expect(checkboxInput).not.toBeChecked();
+    });
+
+    it("button should have 'CRIAR NOVA TAREFA' text when it is to create a new task", () => {
+      const { getByText } = setup();
+
+      expect(getByText(/CRIAR NOVA TAREFA/i)).toBeInTheDocument();
     });
   });
 });
