@@ -125,4 +125,15 @@ describe("reducers", () => {
       });
     });
   });
+
+  describe("updateTodoList", () => {
+    it("keeps others reducers states and rewrite data array when called", () => {
+      expect(
+        updateTodoList(undefined, { data: [], type: "UPDATE_TODO_LIST" })
+      ).toEqual({
+        ...INITIAL_STATE,
+        data: [],
+      });
+    });
+  });
 });
