@@ -16,7 +16,16 @@ const setup = (selectedTodo?: IUserTodos) => {
     />
   );
 
-  return { getByText, ...rest };
+  const titleInput = (document.querySelector("#todo-title") as HTMLInputElement)
+    .value;
+
+  const descriptionInput = (
+    document.querySelector(
+      ".modal__todo__body__description-field"
+    ) as HTMLInputElement
+  ).value;
+
+  return { getByText, titleInput, descriptionInput, ...rest };
 };
 
 describe("Modal show case.", () => {
@@ -47,23 +56,13 @@ describe("Modal show case.", () => {
 describe("modal inputs", () => {
   describe("opened as a create new task component", () => {
     it("should start title input empty", () => {
-      setup();
-
-      const titleInput = (
-        document.querySelector("#todo-title") as HTMLInputElement
-      ).value;
+      const { titleInput } = setup();
 
       expect(titleInput).toBe("");
     });
 
     it("should start description input empty", () => {
-      setup();
-
-      const descriptionInput = (
-        document.querySelector(
-          ".modal__todo__body__description-field"
-        ) as HTMLInputElement
-      ).value;
+      const { descriptionInput } = setup();
 
       expect(descriptionInput).toBe("");
     });
@@ -85,23 +84,13 @@ describe("modal inputs", () => {
 
   describe("opening as editing an task", () => {
     it("title input default value should be passed selected todo title", () => {
-      setup(mockTodos[0]);
-
-      const titleInput = (
-        document.querySelector("#todo-title") as HTMLInputElement
-      ).value;
+      const { titleInput } = setup(mockTodos[0]);
 
       expect(titleInput).toBe(mockTodos[0].task);
     });
 
     it("title description default value should be passed selected todo title", () => {
-      setup(mockTodos[0]);
-
-      const descriptionInput = (
-        document.querySelector(
-          ".modal__todo__body__description-field"
-        ) as HTMLInputElement
-      ).value;
+      const { descriptionInput } = setup(mockTodos[0]);
 
       expect(descriptionInput).toBe(mockTodos[0].description);
     });
@@ -116,8 +105,6 @@ describe("modal inputs", () => {
 
     it("button should have 'ATUALIZAR' text when it is to create a new task", () => {
       const { getByText } = setup(mockTodos[0]);
-
-      console.log(getByText(/ATUALIZAR/i));
 
       expect(getByText(/ATUALIZAR/i)).toBeInTheDocument();
     });
