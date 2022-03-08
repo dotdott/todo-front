@@ -1,13 +1,19 @@
-import { render, fireEvent } from "src/util/test-utils";
+import { IUserTodos } from "src/global/@types";
+import { render, fireEvent, mockTodos } from "src/util/test-utils";
 import CreateTodoModal from "..";
 
 const showModal = jest.fn();
 const closeModal = showModal.mockImplementationOnce(() => false);
 const modalRef = jest.fn();
 
-const setup = () => {
+const setup = (selectedTodo?: IUserTodos) => {
   const { getByText, ...rest } = render(
-    <CreateTodoModal show={true} handleClose={closeModal} modalRef={modalRef} />
+    <CreateTodoModal
+      show={true}
+      handleClose={closeModal}
+      modalRef={modalRef}
+      selectedTodo={selectedTodo}
+    />
   );
 
   return { getByText, ...rest };
@@ -74,6 +80,30 @@ describe("modal inputs", () => {
       const { getByText } = setup();
 
       expect(getByText(/CRIAR NOVA TAREFA/i)).toBeInTheDocument();
+    });
+  });
+
+  describe("opening as editing an task", () => {
+    it("title input default value should be passed selected todo title", () => {
+      setup(mockTodos[0]);
+
+      const titleInput = (
+        document.querySelector("#todo-title") as HTMLInputElement
+      ).value;
+
+      expect(titleInput).toBe(mockTodos[0].task);
+    });
+
+    it("title description default value should be passed selected todo title", () => {
+      setup(mockTodos[0]);
+
+      const descriptionInput = (
+        document.querySelector(
+          ".modal__todo__body__description-field"
+        ) as HTMLInputElement
+      ).value;
+
+      expect(descriptionInput).toBe(mockTodos[0].description);
     });
   });
 });
