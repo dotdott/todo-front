@@ -140,7 +140,11 @@ describe("displaying error message when state is filled", () => {
   mockSelectorUserID(1);
 
   it("If there's an error when attempting to register it should be displayed on the document", async () => {
-    React.useState = jest.fn().mockReturnValue([mockErrorMessage, {}]);
+    React.useState = jest
+      .fn()
+      .mockReturnValueOnce([mockErrorMessage, {}])
+      .mockReturnValue([false, () => {}])
+      .mockReturnValueOnce([mockErrorMessage, {}]);
 
     const { getByText } = render(<Register />);
 

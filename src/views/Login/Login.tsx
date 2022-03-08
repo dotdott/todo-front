@@ -26,10 +26,13 @@ interface ILoginResults {
 }
 
 const Login = () => {
-  const [formFields, setFormFields] = useState({ email: "", password: "" });
+  const [formFields, setFormFields] = useState({
+    email: "",
+    password: "",
+  });
   const [errorMessage, setErrorMessage] = React.useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isEnteringPage, setIsEnteringPage] = useState(true);
+  const [isEnteringPage, setIsEnteringPage] = React.useState(true);
   const [showModalError, setShowModalError] = useState(false);
   const [inputFocus, setInputFocus] = useState(false);
   const [modalMessage, setModalMessage] = useState("");

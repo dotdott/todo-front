@@ -7,11 +7,7 @@ const modalRef = jest.fn();
 
 const setup = () => {
   const { getByText, ...rest } = render(
-    <CreateTodoModal
-      show={showModal.mockImplementationOnce(() => true)()}
-      handleClose={closeModal}
-      modalRef={modalRef}
-    />
+    <CreateTodoModal show={true} handleClose={closeModal} modalRef={modalRef} />
   );
 
   return { getByText, ...rest };

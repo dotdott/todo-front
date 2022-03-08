@@ -172,7 +172,11 @@ describe("should show error when error state is filled", () => {
   mockSelectorUserID(-1);
 
   it("If there's an error when attempting to login it should be displayed on the document", async () => {
-    React.useState = jest.fn().mockReturnValue(["Error error", {}]);
+    React.useState = jest
+      .fn()
+      .mockReturnValueOnce(["Error error", {}])
+      .mockReturnValue([false, () => {}])
+      .mockReturnValueOnce(["Error error", {}]);
 
     const { getByText } = render(<Login />);
 
