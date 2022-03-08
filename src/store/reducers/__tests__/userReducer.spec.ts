@@ -68,7 +68,7 @@ describe("reducers", () => {
     it("should not returns action type, and update userReducer with passed values", () => {
       expect(
         addUser(undefined, { ...mockUserReducer, type: "ADD_USER" })
-      ).toEqual({ ...mockUserReducer, type: "ADD_USER" });
+      ).toEqual({ ...mockUserReducer });
     });
   });
 
