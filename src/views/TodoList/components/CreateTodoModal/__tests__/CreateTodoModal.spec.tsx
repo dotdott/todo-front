@@ -13,7 +13,7 @@ const setup = () => {
   return { getByText, ...rest };
 };
 
-describe("Modal should open display the create modal layout", () => {
+describe("Modal show case.", () => {
   it("should display 'create' texts fields in modal when there is no todo selected", () => {
     const { getByText } = setup();
 
@@ -35,5 +35,31 @@ describe("Modal should open display the create modal layout", () => {
       />
     );
     expect(document.querySelector(".modal__todo")).not.toBeInTheDocument();
+  });
+});
+
+describe("modal inputs", () => {
+  describe("opened as a create new task component", () => {
+    it("should start title input empty", () => {
+      setup();
+
+      const titleInput = (
+        document.querySelector("#todo-title") as HTMLInputElement
+      ).value;
+
+      expect(titleInput).toBe("");
+    });
+
+    it("should start description input empty", () => {
+      setup();
+
+      const titleInput = (
+        document.querySelector(
+          ".modal__todo__body__description-field"
+        ) as HTMLInputElement
+      ).value;
+
+      expect(titleInput).toBe("");
+    });
   });
 });
