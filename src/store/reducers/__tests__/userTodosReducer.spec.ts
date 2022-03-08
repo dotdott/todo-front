@@ -108,4 +108,10 @@ describe("reducers", () => {
       });
     });
   });
+
+  describe("cleanUserTodos", () => {
+    it("should return user todos state to its initials state", () => {
+      expect(cleanUserTodos()).toEqual(INITIAL_STATE);
+    });
+  });
 });
