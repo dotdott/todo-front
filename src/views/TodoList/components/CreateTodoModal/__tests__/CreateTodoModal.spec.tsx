@@ -69,9 +69,9 @@ describe("modal inputs", () => {
     });
 
     it("checkbox should start UNCHECKED", () => {
-      const { getByTestId } = setup();
+      const { getByLabelText } = setup();
 
-      const checkboxInput = getByTestId("checkbox-testid");
+      const checkboxInput = getByLabelText("Marcar como concluída");
 
       expect(checkboxInput).not.toBeChecked();
     });
@@ -104,6 +104,22 @@ describe("modal inputs", () => {
       ).value;
 
       expect(descriptionInput).toBe(mockTodos[0].description);
+    });
+
+    it("checkbox should start CHECKED", () => {
+      const { getByLabelText } = setup(mockTodos[0]);
+
+      const checkboxInput = getByLabelText("Marcar como concluída");
+
+      expect(checkboxInput).toBeChecked();
+    });
+
+    it("button should have 'ATUALIZAR' text when it is to create a new task", () => {
+      const { getByText } = setup(mockTodos[0]);
+
+      console.log(getByText(/ATUALIZAR/i));
+
+      expect(getByText(/ATUALIZAR/i)).toBeInTheDocument();
     });
   });
 });

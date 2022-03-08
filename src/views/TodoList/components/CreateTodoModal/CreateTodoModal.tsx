@@ -209,7 +209,6 @@ const CreateTodoModal = ({
                   <MU.Checkbox
                     defaultChecked={selectedTodo?.has_completed === 1}
                     name="Marcar como concluída"
-                    data-testid="checkbox-testid"
                   />
                 }
                 label="Marcar como concluída"
