@@ -114,4 +114,15 @@ describe("reducers", () => {
       expect(cleanUserTodos()).toEqual(INITIAL_STATE);
     });
   });
+
+  describe("cleanMessageError", () => {
+    it("keeps others reducers states and clean errorMessage state when called", () => {
+      expect(
+        cleanMessageError(undefined, { type: "CLEAN_MESSAGE_ERROR" })
+      ).toEqual({
+        ...INITIAL_STATE,
+        errorMessage: "",
+      });
+    });
+  });
 });
